@@ -1,0 +1,23 @@
+services:
+  postgres:
+    image: postgres:15
+    container_name: fio-condutor-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: fio_condutor
+      POSTGRES_USER: admin
+      POSTGRES_PASSWORD: senha123
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+      - ./database/init.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - fio-condutor-network
+
+volumes:
+  postgres_data:
+
+networks:
+  fio-condutor-network:
+    driver: bridge
