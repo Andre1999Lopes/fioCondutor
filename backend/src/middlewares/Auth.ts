@@ -4,13 +4,13 @@ import { authUtils } from '../utils/Auth';
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    const authHeader = authUtils.extractToken(req.headers.authorization)
+    const authHeader = req.headers.authorization
 
     if (!authHeader) return res.status(401).json({error: 'Cabeçalho de autenticação não encontrado'})
 
     const [bearer, token] = authHeader.split(' ')
 
-    if (!bearer || !token) return res.status(401).json({error: 'Cabeçalho de autenticação não encontrado'})
+    if (bearer !== 'Bearer' || !token) return res.status(401).json({error: 'Cabeçalho de autenticação inválido'})
     
     // Verificar token
     const decoded = authUtils.verifyToken(token) as { usuarioId: number; email: string }

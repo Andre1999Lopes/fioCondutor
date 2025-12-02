@@ -9,6 +9,7 @@ export const dashboardController = {
         totalAlunos,
         totalTurmas,
         turmasAtivas,
+        totalMatriculas,
         pagamentosEsteMes,
         inadimplentes
       ] = await Promise.all([
@@ -20,6 +21,9 @@ export const dashboardController = {
 
         // Turmas ativas
         prisma.turma.count({ where: { status: 'Ativa' } }),
+
+        // Total de matrículas
+        prisma.matricula.count(),
 
         // Pagamentos deste mês
         prisma.pagamento.aggregate({
@@ -46,7 +50,8 @@ export const dashboardController = {
         totalAlunos,
         totalTurmas,
         turmasAtivas,
-        receitaEsteMes: pagamentosEsteMes._sum.valor || 0,
+        totalMatriculas,
+        arrecadacaoMes: pagamentosEsteMes._sum.valor || 0,
         totalInadimplentes: inadimplentes
       })
     } catch (error) {
@@ -74,7 +79,24 @@ export const dashboardController = {
         }
       })
 
-      res.json(inadimplentes)
+      // Mapear para o formato esperado pelo frontend
+      const resultado = inadimplentes.map(item => {
+        const diasAtraso = Math.floor(
+          (new Date().getTime() - new Date(item.data_vencimento).getTime()) / (1000 * 60 * 60 * 24)
+        );
+        
+        return {
+          id: item.id,
+          alunoNome: item.aluno.nome,
+          alunoId: item.aluno.id,
+          valorDevido: item.valor,
+          diasAtraso,
+          dataVencimento: item.data_vencimento,
+          status: item.status
+        };
+      });
+
+      res.json(resultado)
     } catch (error) {
       console.error('Erro ao buscar inadimplentes:', error)
       res.status(500).json({ error: 'Erro interno do servidor' })

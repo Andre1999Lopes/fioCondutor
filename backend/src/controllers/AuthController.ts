@@ -48,7 +48,7 @@ export const authController = {
 
       res.status(201).json({
         message: 'Usuário criado com sucesso',
-        usuario,
+        user: usuario,
         token
       })
     } catch (error) {
@@ -89,7 +89,7 @@ export const authController = {
 
       res.json({
         message: 'Login realizado com sucesso',
-        usuario: usuarioSemSenha,
+        user: usuarioSemSenha,
         token
       })
     } catch (error) {
