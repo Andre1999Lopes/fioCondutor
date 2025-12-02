@@ -1,26 +1,35 @@
-"use client";
+'use client';
 
-import { useAuthStore } from "@/store/auth-store";
-import { useRouter } from "next/navigation";
-import { ReactNode, useEffect, useState } from "react";
+import { authApi } from '@/lib/api/api';
+import { useAuthStore } from '@/store/auth-store';
+import { useRouter } from 'next/navigation';
+import { ReactNode, useEffect, useState } from 'react';
 
 export function ProtectedRoute({ children }: { children: ReactNode }) {
-  const { token } = useAuthStore();
+  const { token, logout } = useAuthStore();
   const router = useRouter();
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    // Verificar token no Zustand primeiro
-    const authToken = token;
-    const storedToken = localStorage.getItem("token");
-    
-    // Se não tem token em nenhum lugar, redirecionar
-    if (!authToken && !storedToken) {
-      router.push("/login");
+    const authToken = token || localStorage.getItem('token');
+    if (!authToken) {
+      router.push('/login');
+      setIsChecking(false);
+      return;
     }
-    
-    setIsChecking(false);
-  }, [token, router]);
+    // Verificar se o token realmente é válido
+    (async () => {
+      try {
+        await authApi.getProfile();
+        setIsChecking(false);
+      } catch (err) {
+        // Token inválido ou expirado
+        logout();
+        router.push('/login');
+        setIsChecking(false);
+      }
+    })();
+  }, [token, router, logout]);
 
   if (isChecking) {
     return null;
