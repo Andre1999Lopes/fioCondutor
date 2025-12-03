@@ -4,14 +4,11 @@ import { authUtils } from '../utils/Auth';
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // Lê o token do cookie ou do header Authorization
     let token = req.cookies?.token;
 
-    // Se não encontrou no cookie, busca no header Authorization
     if (!token) {
       const authHeader = req.headers.authorization;
       if (authHeader && authHeader.startsWith('Bearer ')) {
-        token = authHeader.substring(7); // Remove "Bearer " do início
       }
     }
 
@@ -22,7 +19,6 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
     try {
       const decoded = authUtils.verifyToken(token) as { usuarioId: number; email: string };
 
-      // Verificar se usuário ainda existe no banco usando Prisma
       const usuario = await prisma.usuario.findUnique({
         where: {
           id: decoded.usuarioId,
@@ -40,7 +36,6 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
         return res.status(401).json({ error: 'Usuário não encontrado' });
       }
 
-      // Adicionar usuário à request
       (req as any).usuario = usuario;
       next();
     } catch (error: any) {

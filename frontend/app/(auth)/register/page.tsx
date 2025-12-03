@@ -37,7 +37,6 @@ export default function RegisterPage() {
     try {
       const response = await authApi.register({ nome, email, senha: password });
 
-      // Tentar fazer login automaticamente após registrar
       const loginResponse = await authApi.login(email, password);
       const token = loginResponse.data.token;
       const user = loginResponse.data.user || {
@@ -46,7 +45,6 @@ export default function RegisterPage() {
         email
       };
 
-      // Atualizar estado global via Zustand (já salva no localStorage)
       login(token, user);
 
       router.push('/dashboard');

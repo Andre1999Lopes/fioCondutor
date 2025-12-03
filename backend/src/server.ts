@@ -6,17 +6,15 @@ import cookieParser from 'cookie-parser';
 const app = express();
 const port = process.env.PORT || 3005;
 
-// Middlewares
 app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.FRONT_URL, // ajuste para a URL do seu frontend
+    origin: process.env.FRONT_URL,
     credentials: true
   })
 );
 
-// Health check
 app.get('/health', (req, res) => {
   res.json({
     status: 'OK',
@@ -24,20 +22,16 @@ app.get('/health', (req, res) => {
   });
 });
 
-// Todas as rotas da API
 app.use('/api', routes);
 
-// Rota padrão
 app.get('/', (req, res) => {
   res.redirect('/health');
 });
 
-// Middleware de erro 404
 app.use((req, res) => {
   res.status(404).json({ error: 'Rota não encontrada' });
 });
 
-// Iniciar servidor
 app.listen(port, () => {
   console.log(`🚀 Servidor rodando na porta ${port}`);
   console.log(`📊 Health check: http://localhost:${port}/health`);

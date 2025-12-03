@@ -1,21 +1,12 @@
-import { Router } from 'express'
-import { alunoController } from '../controllers/AlunoController'
+import { Router } from 'express';
+import { alunoController } from '../controllers/AlunoController';
 
-const router = Router()
+const router = Router();
 
-// GET /api/alunos - Listar todos os alunos
-router.get('/', alunoController.listar)
+router.get('/', alunoController.listar);
+router.get('/:id', alunoController.buscarPorId);
+router.post('/', alunoController.criar);
+router.put('/:id', alunoController.atualizar);
+router.delete('/:id', alunoController.deletar);
 
-// GET /api/alunos/:id - Buscar aluno por ID
-router.get('/:id', alunoController.buscarPorId)
-
-// POST /api/alunos - Criar novo aluno
-router.post('/', alunoController.criar)
-
-// PUT /api/alunos/:id - Atualizar aluno
-router.put('/:id', alunoController.atualizar)
-
-// DELETE /api/alunos/:id - Deletar aluno
-router.delete('/:id', alunoController.deletar)
-
-export default router
+export default router;

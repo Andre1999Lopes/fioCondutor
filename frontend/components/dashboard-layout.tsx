@@ -29,7 +29,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className='flex h-screen bg-gray-50'>
-      {/* Sidebar */}
       <aside
         className={`${
           sidebarOpen ? 'translate-x-0' : '-translate-x-full'
@@ -78,9 +77,7 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         </div>
       </aside>
 
-      {/* Main content */}
       <div className='flex flex-1 flex-col overflow-hidden'>
-        {/* Header */}
         <header className='border-b border-gray-200 bg-white px-6 py-4'>
           <div className='flex items-center justify-between'>
             <button onClick={() => setSidebarOpen(!sidebarOpen)} className='lg:hidden'>
@@ -98,7 +95,6 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           </div>
         </header>
 
-        {/* Overlay for mobile */}
         {sidebarOpen && (
           <div className='fixed inset-0 z-30 bg-black/50 lg:hidden' onClick={() => setSidebarOpen(false)} />
         )}

@@ -3,7 +3,6 @@ import { prisma } from '../database/Client';
 import { authUtils } from '../utils/Auth';
 
 export const authController = {
-  // REGISTRAR NOVO USUÁRIO
   async registrar(req: Request, res: Response) {
     try {
       const { nome, email, senha } = req.body;
@@ -16,7 +15,6 @@ export const authController = {
         return res.status(400).json({ error: 'Senha deve ter pelo menos 6 caracteres' });
       }
 
-      // Verificar se email já existe
       const usuarioExistente = await prisma.usuario.findUnique({
         where: { email }
       });
@@ -25,10 +23,8 @@ export const authController = {
         return res.status(400).json({ error: 'Email já cadastrado' });
       }
 
-      // Hash da senha
       const senhaHash = await authUtils.hashPassword(senha);
 
-      // Criar usuário
       const usuario = await prisma.usuario.create({
         data: {
           nome,
@@ -43,18 +39,15 @@ export const authController = {
         }
       });
 
-      // Gerar token
       const token = authUtils.generateToken(usuario.id, usuario.email);
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 1000 * 60 * 60 * 24 // 1 dia
+        sameSite: 'lax'
       });
 
       res.status(201).json({
         message: 'Usuário criado com sucesso',
-        token, // Retornar token no body para o frontend
         user: usuario
       });
     } catch (error) {
@@ -63,7 +56,6 @@ export const authController = {
     }
   },
 
-  // LOGIN
   async login(req: Request, res: Response) {
     try {
       const { email, senha } = req.body;
@@ -72,7 +64,6 @@ export const authController = {
         return res.status(400).json({ error: 'Email e senha são obrigatórios' });
       }
 
-      // Buscar usuário com a senha (precisamos dela para verificação)
       const usuario = await prisma.usuario.findUnique({
         where: { email }
       });
@@ -81,26 +72,21 @@ export const authController = {
         return res.status(401).json({ error: 'Credenciais inválidas' });
       }
 
-      // Verificar senha
       const senhaValida = await authUtils.verifyPassword(senha, usuario.senha);
       if (!senhaValida) {
         return res.status(401).json({ error: 'Credenciais inválidas' });
       }
 
-      // Gerar token
       const token = authUtils.generateToken(usuario.id, usuario.email);
       res.cookie('token', token, {
         httpOnly: true,
         secure: process.env.NODE_ENV === 'production',
-        sameSite: 'lax',
-        maxAge: 1000 * 60 * 60 * 24 // 1 dia
+        sameSite: 'lax'
       });
 
-      // Remover senha do response
       const { senha: _, ...usuarioSemSenha } = usuario;
       res.json({
         message: 'Login realizado com sucesso',
-        token, // Retornar token no body para o frontend
         user: usuarioSemSenha
       });
     } catch (error) {
@@ -109,7 +95,6 @@ export const authController = {
     }
   },
 
-  // PERFIL DO USUÁRIO LOGADO
   async perfil(req: Request, res: Response) {
     try {
       const usuario = (req as any).usuario;
@@ -120,7 +105,6 @@ export const authController = {
     }
   },
 
-  // ATUALIZAR PERFIL
   async atualizarPerfil(req: Request, res: Response) {
     try {
       const usuarioId = (req as any).usuario.id;
@@ -130,7 +114,6 @@ export const authController = {
         return res.status(400).json({ error: 'Nenhum dado para atualizar' });
       }
 
-      // Verificar se novo email já existe
       if (email) {
         const usuarioComEmail = await prisma.usuario.findFirst({
           where: {
@@ -143,7 +126,6 @@ export const authController = {
         }
       }
 
-      // Atualizar dados
       const usuarioAtualizado = await prisma.usuario.update({
         where: { id: usuarioId },
         data: { nome, email },
@@ -155,14 +137,12 @@ export const authController = {
         }
       });
 
-      // Gerar novo token se email foi alterado
       if (email) {
         const token = authUtils.generateToken(usuarioAtualizado.id, usuarioAtualizado.email);
         res.cookie('token', token, {
           httpOnly: true,
           secure: process.env.NODE_ENV === 'production',
-          sameSite: 'lax',
-          maxAge: 1000 * 60 * 60 * 24 // 1 dia
+          sameSite: 'lax'
         });
       }
 

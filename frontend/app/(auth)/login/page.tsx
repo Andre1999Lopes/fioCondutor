@@ -31,10 +31,8 @@ export default function LoginPage() {
         email
       };
 
-      // Atualizar estado global via Zustand (já salva no localStorage)
       login(token, user);
 
-      // Redirecionar para dashboard
       router.push('/dashboard');
     } catch (err: any) {
       console.error('Erro no login:', err);

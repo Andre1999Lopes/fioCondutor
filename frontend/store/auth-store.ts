@@ -37,7 +37,6 @@ export const useAuthStore = create<AuthState>()(
         }
       },
       hydrate: () => {
-        // Sincronizar com localStorage na inicialização
         if (typeof window !== 'undefined') {
           const token = localStorage.getItem('token');
           const userStr = localStorage.getItem('user');

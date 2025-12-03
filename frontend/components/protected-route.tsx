@@ -17,13 +17,11 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
       setIsChecking(false);
       return;
     }
-    // Verificar se o token realmente é válido
     (async () => {
       try {
         await authApi.getProfile();
         setIsChecking(false);
       } catch (err) {
-        // Token inválido ou expirado
         logout();
         router.push('/login');
         setIsChecking(false);

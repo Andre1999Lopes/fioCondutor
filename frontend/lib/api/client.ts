@@ -7,22 +7,17 @@ export const apiClient = axios.create({
   headers: {
     'Content-Type': 'application/json'
   }
-  // withCredentials: true // Removido para evitar conflito com header Authorization
 });
 
-// Interceptor para tratamento de erros
 apiClient.interceptors.response.use(
   (response) => response,
   (error) => {
     console.error('Erro na resposta:', error.response?.status, error.response?.data);
 
-    // Redirecionar para login em caso de 401 (não autorizado)
     if (error.response?.status === 401 && typeof window !== 'undefined') {
-      // Limpar autenticação
       localStorage.removeItem('token');
       localStorage.removeItem('user');
 
-      // Redirecionar apenas se não estiver já na página de login ou registro
       const currentPath = window.location.pathname;
       if (!currentPath.startsWith('/login') && !currentPath.startsWith('/register')) {
         window.location.href = '/login';
@@ -32,7 +27,6 @@ apiClient.interceptors.response.use(
     return Promise.reject(error);
   }
 );
-// Interceptor para adicionar token JWT no header Authorization
 apiClient.interceptors.request.use(
   (config) => {
     if (typeof window !== 'undefined') {

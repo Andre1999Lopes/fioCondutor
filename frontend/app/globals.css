@@ -1,11 +1,9 @@
 @import 'tailwindcss';
 
 :root {
-  /* Cores base - HEX para garantir */
   --background: #ffffff;
   --foreground: #222222;
 
-  /* Paleta do ateliê - HEX */
   --primary: #5f7163;
   --primary-foreground: #ffffff;
 
@@ -25,17 +23,13 @@
   --input: #e2e8f0;
   --ring: #222222;
 
-  /* Border radius */
   --radius: 0.5rem;
 }
 
-/* Use @theme sem "inline" para melhor compatibilidade */
 @theme {
-  /* Cores base */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
 
-  /* Cores principais */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
 
@@ -55,7 +49,6 @@
   --color-input: var(--input);
   --color-ring: var(--ring);
 
-  /* Border radius */
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
   --radius-sm: calc(var(--radius) - 4px);
@@ -84,7 +77,6 @@ body {
   background-color: rgba(232, 65, 47, 0.1) !important; /* #e8412f com 10% opacidade */
 }
 
-/* Logo personalizada: bordas suavemente arredondadas */
 .logo-custom-rounded {
   border-radius: 16px;
 }
