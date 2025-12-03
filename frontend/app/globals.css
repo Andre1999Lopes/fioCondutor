@@ -1,30 +1,30 @@
-@import "tailwindcss";
+@import 'tailwindcss';
 
 :root {
   /* Cores base - HEX para garantir */
   --background: #ffffff;
   --foreground: #222222;
-  
+
   /* Paleta do ateliê - HEX */
   --primary: #5f7163;
   --primary-foreground: #ffffff;
-  
+
   --secondary: #2b398f;
   --secondary-foreground: #ffffff;
-  
+
   --accent: #abcfef;
   --accent-foreground: #222222;
-  
+
   --destructive: #e8412f;
   --destructive-foreground: #ffffff;
-  
+
   --muted: #f1f5f9;
   --muted-foreground: #64748b;
-  
+
   --border: #e2e8f0;
   --input: #e2e8f0;
   --ring: #222222;
-  
+
   /* Border radius */
   --radius: 0.5rem;
 }
@@ -34,27 +34,27 @@
   /* Cores base */
   --color-background: var(--background);
   --color-foreground: var(--foreground);
-  
+
   /* Cores principais */
   --color-primary: var(--primary);
   --color-primary-foreground: var(--primary-foreground);
-  
+
   --color-secondary: var(--secondary);
   --color-secondary-foreground: var(--secondary-foreground);
-  
+
   --color-accent: var(--accent);
   --color-accent-foreground: var(--accent-foreground);
-  
+
   --color-destructive: var(--destructive);
   --color-destructive-foreground: var(--destructive-foreground);
-  
+
   --color-muted: var(--muted);
   --color-muted-foreground: var(--muted-foreground);
-  
+
   --color-border: var(--border);
   --color-input: var(--input);
   --color-ring: var(--ring);
-  
+
   /* Border radius */
   --radius-lg: var(--radius);
   --radius-md: calc(var(--radius) - 2px);
@@ -82,4 +82,9 @@ body {
 
 .hover-bg-destructive-10:hover {
   background-color: rgba(232, 65, 47, 0.1) !important; /* #e8412f com 10% opacidade */
+}
+
+/* Logo personalizada: bordas suavemente arredondadas */
+.logo-custom-rounded {
+  border-radius: 16px;
 }

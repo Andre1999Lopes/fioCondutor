@@ -59,16 +59,12 @@ export default function RegisterPage() {
 
   return (
     <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-background p-4'>
-      <div className='w-full max-w-md bg-white rounded-xl shadow-lg p-8'>
-        <div className='text-center mb-8'>
-          <div className='mx-auto mb-4 flex h-12 w-12 items-center justify-center rounded-full bg-primary/10'>
-            <User className='h-6 w-6 text-primary' />
-          </div>
-          <h1 className='text-2xl font-bold text-gray-900'>Fio Condutor</h1>
-          <p className='text-gray-600'>Criar nova conta</p>
-        </div>
+      <div className='w-full max-w-md rounded-xl shadow-lg p-8 flex flex-col items-center'>
+        <img src='/logo-optimized.webp' alt='Fio Condutor' className='h-32 w-32 logo-custom-rounded' loading='lazy' />
+        <h1 className='mt-4 text-2xl font-bold text-gray-900'>Fio Condutor</h1>
+        <p className='text-gray-600'>Ateliê de Costura</p>
 
-        <form onSubmit={handleSubmit} className='space-y-4'>
+        <form onSubmit={handleSubmit} className='space-y-4 w-full'>
           <div>
             <label className='block text-sm font-medium text-gray-700 mb-2'>Nome Completo</label>
             <div className='relative'>
