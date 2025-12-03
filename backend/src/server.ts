@@ -4,7 +4,7 @@ import routes from './routes';
 import cookieParser from 'cookie-parser';
 
 const app = express();
-const port = process.env.PORT || 3005;
+const port = process.env.PORT;
 
 app.use(cookieParser());
 app.use(express.json());

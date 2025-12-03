@@ -1,8 +1,8 @@
 import bcrypt from 'bcryptjs';
 import jwt from 'jsonwebtoken';
 
-const JWT_SECRET = process.env.JWT_SECRET || 'fio-condutor-secret-key-2024';
-const JWT_EXPIRES_IN = '24h';
+const JWT_SECRET = process.env.JWT_SECRET!;
+const JWT_EXPIRES_IN = '1h';
 
 export const authUtils = {
   async hashPassword(senha: string): Promise<string> {
