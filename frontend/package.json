@@ -4,7 +4,7 @@
   "description": "Sistema de Gestão de Ateliê de Costura - Frontend",
   "private": true,
   "license": "UNLICENSED",
-  "author": "Andre Cardoso",
+  "author": "André Júnior Lopes Cardoso",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

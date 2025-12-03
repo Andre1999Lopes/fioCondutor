@@ -48,5 +48,5 @@ Entre em contato para solicitar autorização:
 
 ---
 
-**Copyright © 2025 Andre Cardoso**
+**Copyright © 2025 André Júnior Lopes Cardoso**
 **Todos os direitos reservados**

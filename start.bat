@@ -6,7 +6,7 @@ echo ====================================
 echo   FIO CONDUTOR - ATELIÊ DE COSTURA
 echo ====================================
 echo.
-echo Copyright (c) 2025 Andre Cardoso
+echo Copyright (c) 2025 André Júnior Lopes Cardoso
 echo TODOS OS DIREITOS RESERVADOS
 echo.
 echo ⚠️  SOFTWARE PROPRIETÁRIO
