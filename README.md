@@ -124,7 +124,7 @@ npx prisma migrate dev
 
 ---
 
-## ✨ Funcionalidades
+## Funcionalidades
 
 ### 🔐 Login e Segurança
 
@@ -151,7 +151,7 @@ npx prisma migrate dev
 - Excluir turmas
 - Visualizar turmas em cards organizados
 
-### � Matrículas
+### Matrículas
 
 - Matricular aluno em turma disponível
 - Ver todas as matrículas ativas
@@ -184,9 +184,9 @@ npx prisma migrate dev
 
 **SOFTWARE PROPRIETÁRIO - TODOS OS DIREITOS RESERVADOS**
 
-Este software é propriedade exclusiva de Andre Cardoso.
+Este software é propriedade exclusiva de André Júnior Lopes Cardoso.
 
-### � Proibições:
+### Proibições:
 
 - ❌ Uso não autorizado
 - ❌ Cópia ou reprodução
@@ -194,17 +194,17 @@ Este software é propriedade exclusiva de Andre Cardoso.
 - ❌ Distribuição ou compartilhamento
 - ❌ Uso comercial
 
-### � Contato:
+### Contato:
 
-Para solicitar autorização: **andre.cardoso@email.com**
+Para solicitar autorização: **work.andrejuniorlopes@gmail.com**
 
 Veja mais em: [LICENSE](./LICENSE) | [NOTICE](./NOTICE)
 
 ---
 
-## �‍💻 Desenvolvedor
+## Desenvolvedor
 
-**Andre Cardoso**
+**André Júnior Lopes Cardoso**
 
 Copyright © 2025 - Todos os direitos reservados
 
@@ -214,7 +214,7 @@ Copyright © 2025 - Todos os direitos reservados
 
 ---
 
-## � Sobre o Projeto
+## Sobre o Projeto
 
 O **Fio Condutor** é um sistema completo de gestão desenvolvido especialmente para ateliês de costura.
 
@@ -247,4 +247,4 @@ Com ele, você pode:
 
 ---
 
-_Última atualização: Dezembro 2024_
+_Última atualização: Dezembro 2025_
