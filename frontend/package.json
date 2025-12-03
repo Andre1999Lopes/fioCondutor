@@ -1,7 +1,10 @@
 {
-  "name": "frontend",
-  "version": "0.1.0",
+  "name": "fio-condutor-frontend",
+  "version": "1.0.0",
+  "description": "Sistema de Gestão de Ateliê de Costura - Frontend",
   "private": true,
+  "license": "UNLICENSED",
+  "author": "Andre Cardoso",
   "scripts": {
     "dev": "next dev",
     "build": "next build",

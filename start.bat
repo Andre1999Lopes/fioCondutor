@@ -6,6 +6,14 @@ echo ====================================
 echo   FIO CONDUTOR - ATELIÊ DE COSTURA
 echo ====================================
 echo.
+echo Copyright (c) 2025 Andre Cardoso
+echo TODOS OS DIREITOS RESERVADOS
+echo.
+echo ⚠️  SOFTWARE PROPRIETÁRIO
+echo ⚠️  USO NÃO AUTORIZADO PROIBIDO
+echo ⚠️  Veja LICENSE e NOTICE
+echo ====================================
+echo.
 
 REM Verificar se o Docker está instalado
 where docker >nul 2>nul

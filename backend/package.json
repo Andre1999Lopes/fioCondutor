@@ -1,8 +1,11 @@
 {
   "name": "fio-condutor",
   "version": "1.0.0",
+  "description": "Sistema de Gestão de Ateliê de Costura - Backend API",
   "main": "dist/server.js",
-  "license": "MIT",
+  "license": "UNLICENSED",
+  "private": true,
+  "author": "Andre Cardoso",
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",
