@@ -20,24 +20,46 @@
 
 ## 🚀 Quick Start
 
+### 🪟 Windows (Método mais fácil!)
+
+**Duplo clique em `start.bat`** na raiz do projeto e pronto! 🎉
+
+Veja mais detalhes em: [SCRIPTS_WINDOWS.md](./SCRIPTS_WINDOWS.md)
+
+---
+
 ### Primeira Vez?
 
 1. **Leia:** [INICIO_RAPIDO.md](./INICIO_RAPIDO.md) (5 minutos)
 
 2. **Instale dependências:**
+
 ```bash
 cd backend && npm install
 cd ../frontend && npm install
 ```
 
 3. **Execute:**
-```bash
-# Terminal 1 - Backend
-cd backend && npm run dev
 
-# Terminal 2 - Frontend
-cd frontend && npm run dev
-```
+   **Opção 1 - Script automático (Windows):**
+
+   ```bash
+   # Duplo clique no arquivo start.bat
+   ```
+
+   **Opção 2 - Manual:**
+
+   ```bash
+   # Terminal 1 - Banco de dados
+   cd backend/src/database
+   docker-compose -f compose.yaml up -d
+
+   # Terminal 2 - Backend
+   cd backend && npm run dev
+
+   # Terminal 3 - Frontend
+   cd frontend && npm run dev
+   ```
 
 4. **Acesse:** http://localhost:3000
 
@@ -45,16 +67,17 @@ cd frontend && npm run dev
 
 ## 📚 Documentação
 
-| Documento | Objetivo | Leitura |
-|-----------|----------|---------|
-| **[SUMARIO_EXECUTIVO.md](./SUMARIO_EXECUTIVO.md)** | O que foi entregue | 3 min |
-| **[INICIO_RAPIDO.md](./INICIO_RAPIDO.md)** | Como executar | 5 min |
-| **[INDEX.md](./INDEX.md)** | Mapa do projeto | 7 min |
-| **[GUIA_VISUAL.md](./GUIA_VISUAL.md)** | Layout das páginas | 10 min |
-| **[CHECKLIST.md](./CHECKLIST.md)** | Validação completa | 5 min |
-| **[RESUMO_FINAL.md](./RESUMO_FINAL.md)** | Detalhes técnicos | 8 min |
-| **[frontend/FRONTEND_README.md](./frontend/FRONTEND_README.md)** | Docs frontend | 10 min |
-| **[backend/README.md](./backend/README.md)** | Docs backend | 10 min |
+| Documento                                                        | Objetivo           | Leitura |
+| ---------------------------------------------------------------- | ------------------ | ------- |
+| **[SUMARIO_EXECUTIVO.md](./SUMARIO_EXECUTIVO.md)**               | O que foi entregue | 3 min   |
+| **[INICIO_RAPIDO.md](./INICIO_RAPIDO.md)**                       | Como executar      | 5 min   |
+| **[SCRIPTS_WINDOWS.md](./SCRIPTS_WINDOWS.md)**                   | Scripts Windows    | 3 min   |
+| **[INDEX.md](./INDEX.md)**                                       | Mapa do projeto    | 7 min   |
+| **[GUIA_VISUAL.md](./GUIA_VISUAL.md)**                           | Layout das páginas | 10 min  |
+| **[CHECKLIST.md](./CHECKLIST.md)**                               | Validação completa | 5 min   |
+| **[RESUMO_FINAL.md](./RESUMO_FINAL.md)**                         | Detalhes técnicos  | 8 min   |
+| **[frontend/FRONTEND_README.md](./frontend/FRONTEND_README.md)** | Docs frontend      | 10 min  |
+| **[backend/README.md](./backend/README.md)**                     | Docs backend       | 10 min  |
 
 ---
 
@@ -82,12 +105,14 @@ cd frontend && npm run dev
 ## ✨ Funcionalidades
 
 ### 🔐 Autenticação
+
 - ✅ Login com JWT
 - ✅ Registro de nova conta
 - ✅ Sessão persistente
 - ✅ Auto-logout
 
 ### 👥 Gestão de Alunos
+
 - ✅ Listar alunos
 - ✅ Criar aluno
 - ✅ Editar aluno
@@ -95,6 +120,7 @@ cd frontend && npm run dev
 - ✅ Buscar por nome/email
 
 ### 🏫 Gestão de Turmas
+
 - ✅ Listar turmas
 - ✅ Criar turma
 - ✅ Editar turma
@@ -102,12 +128,14 @@ cd frontend && npm run dev
 - ✅ Status (ativa/inativa)
 
 ### 📚 Gestão de Matrículas
+
 - ✅ Matricular aluno
 - ✅ Listar matrículas
 - ✅ Desmatricular
 - ✅ Filtrar por status
 
 ### 💳 Controle de Pagamentos
+
 - ✅ Registrar pagamento
 - ✅ Marcar como pago
 - ✅ Listar pendências
@@ -115,6 +143,7 @@ cd frontend && npm run dev
 - ✅ Arrecadação
 
 ### 📊 Dashboard
+
 - ✅ Estatísticas gerais
 - ✅ Tabela de inadimplências
 - ✅ Dados em tempo real
@@ -125,35 +154,36 @@ cd frontend && npm run dev
 
 ### ✅ Frontend - 100% Completo
 
-| Feature | Status |
-|---------|--------|
-| Login/Registro | ✅ |
-| Dashboard | ✅ |
-| CRUD Alunos | ✅ |
-| CRUD Turmas | ✅ |
-| CRUD Matrículas | ✅ |
-| CRUD Pagamentos | ✅ |
-| Responsividade | ✅ |
-| API Integration | ✅ |
-| Documentação | ✅ |
+| Feature         | Status |
+| --------------- | ------ |
+| Login/Registro  | ✅     |
+| Dashboard       | ✅     |
+| CRUD Alunos     | ✅     |
+| CRUD Turmas     | ✅     |
+| CRUD Matrículas | ✅     |
+| CRUD Pagamentos | ✅     |
+| Responsividade  | ✅     |
+| API Integration | ✅     |
+| Documentação    | ✅     |
 
 ### ✅ Backend - 100% Funcional
 
-| Feature | Status |
-|---------|--------|
-| Autenticação | ✅ |
-| CRUD Alunos | ✅ |
-| CRUD Turmas | ✅ |
-| CRUD Matrículas | ✅ |
-| CRUD Pagamentos | ✅ |
-| Dashboard | ✅ |
-| Database | ✅ |
+| Feature         | Status |
+| --------------- | ------ |
+| Autenticação    | ✅     |
+| CRUD Alunos     | ✅     |
+| CRUD Turmas     | ✅     |
+| CRUD Matrículas | ✅     |
+| CRUD Pagamentos | ✅     |
+| Dashboard       | ✅     |
+| Database        | ✅     |
 
 ---
 
 ## 💻 Stack Tecnológico
 
 ### Frontend
+
 - **Next.js** 16 - Framework React SSR
 - **React** 19 - UI Library
 - **TypeScript** - Type Safety
@@ -163,6 +193,7 @@ cd frontend && npm run dev
 - **Axios** - HTTP Client
 
 ### Backend
+
 - **Node.js** - Runtime
 - **Express** - Web Framework
 - **TypeScript** - Type Safety
@@ -175,6 +206,7 @@ cd frontend && npm run dev
 ## 🚀 Deployment
 
 ### Vercel (Recomendado)
+
 ```bash
 # Frontend (Vercel)
 cd frontend
@@ -186,6 +218,7 @@ cd backend
 ```
 
 ### Docker
+
 ```bash
 # Frontend
 docker build -f frontend/Dockerfile -t fio-condutor-frontend .
@@ -219,6 +252,7 @@ docker-compose up
 ## 📊 Endpoints da API
 
 ### Autenticação
+
 ```
 POST   /api/auth/login
 POST   /api/auth/registrar
@@ -226,6 +260,7 @@ GET    /api/auth/perfil
 ```
 
 ### Dados
+
 ```
 GET    /api/alunos           GET    /api/turmas
 POST   /api/alunos           POST   /api/turmas
@@ -246,6 +281,7 @@ GET    /api/dashboard/inadimplencia
 ## 🛠️ Troubleshooting
 
 ### Port 3000 em uso?
+
 ```bash
 # Use porta diferente
 export PORT=3001
@@ -253,6 +289,7 @@ npm run dev
 ```
 
 ### Dependências não instaladas?
+
 ```bash
 rm -r node_modules package-lock.json
 npm install
@@ -260,6 +297,7 @@ npm run dev
 ```
 
 ### API não conecta?
+
 1. Verifique se backend está rodando
 2. Verifique .env.local
 3. Veja console do navegador (F12)
@@ -297,6 +335,7 @@ fioCondutor/
 ## 🎓 Para Começar
 
 ### Step 1: Setup
+
 ```bash
 cd fioCondutor
 cd backend && npm install
@@ -304,6 +343,7 @@ cd ../frontend && npm install
 ```
 
 ### Step 2: Execute
+
 ```bash
 # Terminal 1
 cd backend && npm run dev
@@ -313,6 +353,7 @@ cd frontend && npm run dev
 ```
 
 ### Step 3: Explore
+
 - Acesse http://localhost:3000
 - Crie uma conta
 - Explore o dashboard
@@ -376,7 +417,7 @@ Desenvolvido com ❤️ para **Fio Condutor**
 🌟 **20+ endpoints** consumidos com sucesso  
 🌟 **100% responsivo** em todos os dispositivos  
 🌟 **TypeScript** para type safety  
-🌟 **Documentação completa** com 8 arquivos  
+🌟 **Documentação completa** com 8 arquivos
 
 ---
 
@@ -384,4 +425,4 @@ Desenvolvido com ❤️ para **Fio Condutor**
 
 ---
 
-*Última atualização: Dezembro 2024*
+_Última atualização: Dezembro 2024_

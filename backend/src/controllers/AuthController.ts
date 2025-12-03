@@ -51,8 +51,10 @@ export const authController = {
         sameSite: 'lax',
         maxAge: 1000 * 60 * 60 * 24 // 1 dia
       });
+
       res.status(201).json({
         message: 'Usuário criado com sucesso',
+        token, // Retornar token no body para o frontend
         user: usuario
       });
     } catch (error) {
@@ -93,10 +95,12 @@ export const authController = {
         sameSite: 'lax',
         maxAge: 1000 * 60 * 60 * 24 // 1 dia
       });
+
       // Remover senha do response
       const { senha: _, ...usuarioSemSenha } = usuario;
       res.json({
         message: 'Login realizado com sucesso',
+        token, // Retornar token no body para o frontend
         user: usuarioSemSenha
       });
     } catch (error) {

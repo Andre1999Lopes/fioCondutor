@@ -4,8 +4,16 @@ import { authUtils } from '../utils/Auth';
 
 export const authMiddleware = async (req: Request, res: Response, next: NextFunction) => {
   try {
-    // Lê o token do cookie
-    const token = req.cookies?.token;
+    // Lê o token do cookie ou do header Authorization
+    let token = req.cookies?.token;
+
+    // Se não encontrou no cookie, busca no header Authorization
+    if (!token) {
+      const authHeader = req.headers.authorization;
+      if (authHeader && authHeader.startsWith('Bearer ')) {
+        token = authHeader.substring(7); // Remove "Bearer " do início
+      }
+    }
 
     if (!token) {
       return res.status(401).json({ error: 'Token de autenticação não encontrado' });

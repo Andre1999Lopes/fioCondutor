@@ -1,31 +1,19 @@
-import type { NextRequest } from "next/server";
-import { NextResponse } from "next/server";
+import type { NextRequest } from 'next/server';
+import { NextResponse } from 'next/server';
 
 export function middleware(request: NextRequest) {
-  // Verificar se tem token no cookie (salvo pelo login)
-  const token = request.cookies.get("token")?.value;
   const { pathname } = request.nextUrl;
 
   // Rotas públicas que não precisam de autenticação
-  const publicPaths = ["/login", "/register", "/"];
+  const publicPaths = ['/login', '/register', '/'];
   const isPublicPath = publicPaths.some((path) => pathname === path);
 
-  // Se não tem token e está tentando acessar rota protegida (que não seja pública)
-  if (!token && !isPublicPath && !pathname.startsWith("/api")) {
-    // Permitir acesso ao dashboard - deixar o cliente fazer a verificação
-    // pois localStorage é verificado apenas no browser
-    if (pathname.startsWith("/dashboard") || pathname.startsWith("/(dashboard)")) {
-      return NextResponse.next();
-    }
-    
-    return NextResponse.redirect(new URL("/login", request.url));
-  }
+  // Como estamos usando localStorage (client-side only),
+  // não podemos verificar autenticação no middleware (server-side)
+  // A proteção de rotas será feita no client-side pelos componentes
 
-  // Se tem token e está tentando acessar rota pública
-  if (token && (pathname.startsWith("/login") || pathname.startsWith("/register"))) {
-    return NextResponse.redirect(new URL("/dashboard", request.url));
-  }
-
+  // Apenas permitir acesso a todas as rotas
+  // A verificação real acontecerá nos layouts e componentes protegidos
   return NextResponse.next();
 }
 
@@ -38,6 +26,6 @@ export const config = {
      * - _next/image (image optimization files)
      * - favicon.ico (favicon file)
      */
-    "/((?!api|_next/static|_next/image|favicon.ico).*)",
-  ],
+    '/((?!api|_next/static|_next/image|favicon.ico).*)'
+  ]
 };

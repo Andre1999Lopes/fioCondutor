@@ -1,5 +1,5 @@
-import { create } from "zustand";
-import { persist } from "zustand/middleware";
+import { create } from 'zustand';
+import { persist } from 'zustand/middleware';
 
 interface User {
   id: number;
@@ -25,40 +25,36 @@ export const useAuthStore = create<AuthState>()(
       login: (token, user) => {
         set({ token, user, isAuthenticated: true });
         if (typeof window !== 'undefined') {
-          localStorage.setItem("token", token);
-          localStorage.setItem("user", JSON.stringify(user));
-          // Salvar token em cookie para o middleware
-          document.cookie = `token=${token}; path=/; max-age=${60 * 60 * 24 * 7}`;
+          localStorage.setItem('token', token);
+          localStorage.setItem('user', JSON.stringify(user));
         }
       },
       logout: () => {
         set({ token: null, user: null, isAuthenticated: false });
         if (typeof window !== 'undefined') {
-          localStorage.removeItem("token");
-          localStorage.removeItem("user");
-          // Remover token do cookie
-          document.cookie = "token=; path=/; max-age=0";
+          localStorage.removeItem('token');
+          localStorage.removeItem('user');
         }
       },
       hydrate: () => {
         // Sincronizar com localStorage na inicialização
         if (typeof window !== 'undefined') {
-          const token = localStorage.getItem("token");
-          const userStr = localStorage.getItem("user");
-          
+          const token = localStorage.getItem('token');
+          const userStr = localStorage.getItem('user');
+
           if (token && userStr) {
             try {
               const user = JSON.parse(userStr);
               set({ token, user, isAuthenticated: true });
             } catch (err) {
-              console.error("Erro ao fazer hydrate:", err);
+              console.error('Erro ao fazer hydrate:', err);
             }
           }
         }
-      },
+      }
     }),
     {
-      name: "auth-storage",
+      name: 'auth-storage'
     }
   )
 );

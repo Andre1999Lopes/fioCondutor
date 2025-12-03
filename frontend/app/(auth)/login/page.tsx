@@ -31,14 +31,7 @@ export default function LoginPage() {
         email
       };
 
-      // Salvar no localStorage
-      localStorage.setItem('token', token);
-      localStorage.setItem('user', JSON.stringify(user));
-
-      // Salvar token em cookie para o middleware
-      document.cookie = `token=${token}; path=/; max-age=${60 * 60 * 24 * 7}`; // 7 dias
-
-      // Atualizar estado global via Zustand
+      // Atualizar estado global via Zustand (já salva no localStorage)
       login(token, user);
 
       // Redirecionar para dashboard
