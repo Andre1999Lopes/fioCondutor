@@ -1,14 +1,9 @@
 'use client';
 
 import { useAuthStore } from '@/store/auth-store';
-import { useEffect } from 'react';
 
 export function AuthInitializer({ children }: { children: React.ReactNode }) {
-  const hydrate = useAuthStore((state) => state.hydrate);
-
-  useEffect(() => {
-    hydrate();
-  }, [hydrate]);
-
-  return children;
+  // Com cookies HttpOnly, não precisamos mais de hydrate
+  // O estado será carregado automaticamente quando ProtectedRoute chamar getProfile
+  return <>{children}</>;
 }

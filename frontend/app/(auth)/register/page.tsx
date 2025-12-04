@@ -36,21 +36,14 @@ export default function RegisterPage() {
 
     try {
       const response = await authApi.register({ nome, email, senha: password });
+      const user = response.data.user;
 
-      const loginResponse = await authApi.login(email, password);
-      const token = loginResponse.data.token;
-      const user = loginResponse.data.user || {
-        id: 1,
-        nome,
-        email
-      };
-
-      login(token, user);
+      login(user);
 
       router.push('/dashboard');
     } catch (err: any) {
       console.error('Erro no registro:', err);
-      setError(err.response?.data?.message || 'Erro ao registrar. Tente novamente.');
+      setError(err.response?.data?.error || 'Erro ao registrar. Tente novamente.');
       setLoading(false);
     }
   };

@@ -23,20 +23,14 @@ export default function LoginPage() {
 
     try {
       const response = await authApi.login(email, password);
+      const user = response.data.user;
 
-      const token = response.data.token;
-      const user = response.data.user || {
-        id: 1,
-        nome: email.split('@')[0],
-        email
-      };
-
-      login(token, user);
+      login(user);
 
       router.push('/dashboard');
     } catch (err: any) {
       console.error('Erro no login:', err);
-      setError(err.response?.data?.message || 'Erro ao fazer login');
+      setError(err.response?.data?.error || 'Erro ao fazer login');
       setLoading(false);
     }
   };

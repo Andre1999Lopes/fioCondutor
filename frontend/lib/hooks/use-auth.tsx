@@ -1,12 +1,18 @@
-"use client";
+'use client';
 
-import { useAuthStore } from "@/store/auth-store";
-import { createContext, ReactNode, useContext } from "react";
+import { useAuthStore } from '@/store/auth-store';
+import { createContext, ReactNode, useContext } from 'react';
+
+interface User {
+  id: number;
+  email: string;
+  nome: string;
+}
 
 interface AuthContextType {
-  user: any;
+  user: User | null;
   isAuthenticated: boolean;
-  login: (token: string, user: any) => void;
+  login: (user: User) => void;
   logout: () => void;
 }
 
@@ -19,7 +25,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
     user,
     isAuthenticated,
     login,
-    logout,
+    logout
   };
 
   return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
@@ -28,7 +34,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
 export function useAuth() {
   const context = useContext(AuthContext);
   if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+    throw new Error('useAuth must be used within an AuthProvider');
   }
   return context;
 }

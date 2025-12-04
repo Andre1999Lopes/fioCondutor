@@ -2,15 +2,26 @@ import cors from 'cors';
 import express from 'express';
 import routes from './routes';
 import cookieParser from 'cookie-parser';
+import dotenv from 'dotenv';
+
+dotenv.config();
 
 const app = express();
 const port = process.env.PORT;
+const frontOrigin = process.env.FRONT_URL;
+
+process.on('uncaughtException', (err) => {
+  console.error('Uncaught Exception:', err);
+});
+process.on('unhandledRejection', (reason) => {
+  console.error('Unhandled Rejection:', reason);
+});
 
 app.use(cookieParser());
 app.use(express.json());
 app.use(
   cors({
-    origin: process.env.FRONT_URL,
+    origin: frontOrigin,
     credentials: true
   })
 );

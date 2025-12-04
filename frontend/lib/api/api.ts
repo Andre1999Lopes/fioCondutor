@@ -94,8 +94,9 @@ export const dashboardApi = {
 
 export const authApi = {
   login: (email: string, senha: string) =>
-    apiClient.post<{ token: string; user: User }>('/auth/login', { email, senha }),
+    apiClient.post<{ message: string; user: User }>('/auth/login', { email, senha }),
   register: (data: { nome: string; email: string; senha: string }) =>
-    apiClient.post<{ token: string; user: User }>('/auth/registrar', data),
-  getProfile: () => apiClient.get<User>('/auth/perfil')
+    apiClient.post<{ message: string; user: User }>('/auth/registrar', data),
+  logout: () => apiClient.post('/auth/logout'),
+  getProfile: () => apiClient.get<{ usuario: User }>('/auth/perfil')
 };

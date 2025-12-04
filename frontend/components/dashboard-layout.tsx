@@ -1,5 +1,6 @@
 'use client';
 
+import { authApi } from '@/lib/api/api';
 import { useAuth } from '@/lib/hooks/use-auth';
 import { BarChart3, BookOpen, CreditCard, GraduationCap, LogOut, Menu, User, Users, X } from 'lucide-react';
 import Link from 'next/link';
@@ -11,11 +12,15 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
   const router = useRouter();
   const [sidebarOpen, setSidebarOpen] = useState(false);
 
-  const handleLogout = () => {
-    logout();
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
-    router.push('/login');
+  const handleLogout = async () => {
+    try {
+      await authApi.logout();
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+    } finally {
+      logout();
+      router.push('/login');
+    }
   };
 
   const menuItems = [

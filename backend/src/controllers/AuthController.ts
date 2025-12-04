@@ -157,5 +157,19 @@ export const authController = {
       }
       res.status(500).json({ error: 'Erro interno do servidor' });
     }
+  },
+
+  async logout(req: Request, res: Response) {
+    try {
+      res.clearCookie('token', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production',
+        sameSite: 'lax'
+      });
+      res.json({ message: 'Logout realizado com sucesso' });
+    } catch (error) {
+      console.error('Erro ao fazer logout:', error);
+      res.status(500).json({ error: 'Erro interno do servidor' });
+    }
   }
 };

@@ -6,20 +6,15 @@ import { useRouter } from 'next/navigation';
 import { ReactNode, useEffect, useState } from 'react';
 
 export function ProtectedRoute({ children }: { children: ReactNode }) {
-  const { token, logout } = useAuthStore();
+  const { setUser, logout } = useAuthStore();
   const router = useRouter();
   const [isChecking, setIsChecking] = useState(true);
 
   useEffect(() => {
-    const authToken = token || localStorage.getItem('token');
-    if (!authToken) {
-      router.push('/login');
-      setIsChecking(false);
-      return;
-    }
     (async () => {
       try {
-        await authApi.getProfile();
+        const response = await authApi.getProfile();
+        setUser(response.data.usuario);
         setIsChecking(false);
       } catch (err) {
         logout();
@@ -27,11 +22,11 @@ export function ProtectedRoute({ children }: { children: ReactNode }) {
         setIsChecking(false);
       }
     })();
-  }, [token, router, logout]);
+  }, [router, logout, setUser]);
 
   if (isChecking) {
     return null;
   }
 
-  return children;
+  return <>{children}</>;
 }
