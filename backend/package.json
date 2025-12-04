@@ -12,7 +12,10 @@
     "start": "node --trace-warnings dist/src/server.js",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev",
-    "prisma:seed": "prisma db seed"
+    "prisma:migrate:deploy": "prisma migrate deploy",
+    "prisma:seed": "prisma db seed",
+    "prepare:production": "npm run prisma:generate && npm run prisma:migrate:deploy && npm run prisma:seed",
+    "postinstall": "npm run prisma:generate"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",

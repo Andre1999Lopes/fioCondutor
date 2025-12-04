@@ -83,12 +83,7 @@ export default function LoginPage() {
             {loading ? 'Entrando...' : 'Entrar'}
           </button>
 
-          <div className='text-center text-sm'>
-            <span className='text-gray-600'>Não tem uma conta? </span>
-            <Link href='/register' className='text-primary hover:underline font-medium'>
-              Cadastre-se
-            </Link>
-          </div>
+          {/* Link de registro desabilitado - pasta renomeada para _register */}
         </form>
       </div>
     </div>
