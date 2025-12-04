@@ -1,6 +1,6 @@
 # 🎨 Fio Condutor - Sistema de Gestão do Ateliê Ponto a Ponto
 
-> **Solução simples** para gerenciar alunos, turmas, matrículas e pagamentos de um ateliê de costura.
+> **Solução simples** para gerenciar alunos, turmas, matrículas e pagamentos de uma escola de corte e costura.
 
 ![Status](https://img.shields.io/badge/status-production%20ready-brightgreen)
 ![Version](https://img.shields.io/badge/version-1.0-blue)

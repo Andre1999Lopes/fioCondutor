@@ -1,7 +1,7 @@
 {
   "info": {
     "name": "Fio Condutor API - Completa",
-    "description": "API completa do sistema Fio Condutor - Gestão de Ateliê de Costura",
+    "description": "API completa do sistema Fio Condutor - Gestão de Escola de Corte e Costura",
     "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
     "version": "2.0.0"
   },

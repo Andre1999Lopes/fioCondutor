@@ -3,7 +3,7 @@ chcp 65001 > nul
 title Fio Condutor - Iniciando Aplicação
 
 echo ====================================
-echo   FIO CONDUTOR - ATELIÊ DE COSTURA
+echo   FIO CONDUTOR - ESCOLA DE CORTE E COSTURA
 echo ====================================
 echo.
 echo Copyright (c) 2025 André Júnior Lopes Cardoso

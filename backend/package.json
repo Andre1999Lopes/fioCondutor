@@ -1,7 +1,7 @@
 {
   "name": "fio-condutor",
   "version": "1.0.0",
-  "description": "Sistema de Gestão de Ateliê de Costura - Backend API",
+  "description": "Sistema de Gestão de Escola de Corte e Costura - Backend API",
   "main": "dist/src/server.js",
   "license": "UNLICENSED",
   "private": true,

@@ -6,8 +6,8 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Fio Condutor - Ateliê de Costura',
-  description: 'Sistema de gestão para ateliê de costura',
+  title: 'Fio Condutor - Escola de Corte e Costura',
+  description: 'Sistema de gestão para escola de corte e costura',
   icons: {
     icon: '/logo-optimized.webp',
     apple: '/logo-optimized.webp'

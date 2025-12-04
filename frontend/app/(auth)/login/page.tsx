@@ -40,7 +40,7 @@ export default function LoginPage() {
       <div className='flex flex-col items-center'>
         <img src='/logo-optimized.webp' alt='Fio Condutor' className='h-32 w-32 logo-custom-rounded' loading='lazy' />
         <h1 className='mt-4 text-2xl font-bold text-gray-900'>Fio Condutor</h1>
-        <p className='text-gray-600'>Ateliê de Costura</p>
+        <p className='text-gray-600'>Escola de Corte e Costura</p>
 
         <form onSubmit={handleSubmit} className='space-y-4 w-full'>
           <div>
