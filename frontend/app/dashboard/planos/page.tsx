@@ -81,10 +81,17 @@ function PlanosContent() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    
+    // Garantir que duracao tem um valor válido
+    const dataToSend = {
+      ...formData,
+      duracao: formData.duracao && formData.duracao > 0 ? formData.duracao : 1,
+    };
+    
     if (editingId) {
-      updateMutation.mutate(formData);
+      updateMutation.mutate(dataToSend);
     } else {
-      createMutation.mutate(formData);
+      createMutation.mutate(dataToSend);
     }
   };
 

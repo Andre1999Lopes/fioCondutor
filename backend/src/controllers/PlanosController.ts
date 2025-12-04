@@ -4,11 +4,19 @@ import { prisma } from '../database/Client';
 export const planoController = {
   async listar(req: Request, res: Response) {
     try {
-      const planos = await prisma.plano.findMany({
+      const planosRaw = await prisma.plano.findMany({
         orderBy: {
           nome: 'asc'
         }
       });
+      const planos = planosRaw.map((p: any) => ({
+        id: p.id,
+        nome: p.nome,
+        descricao: p.descricao ?? '',
+        valor: Number(p.valor),
+        duracao: p.duracao ?? 0,
+        ativo: p.ativo ?? true,
+      }));
       res.json(planos);
     } catch (error) {
       console.error('Erro ao listar planos:', error);
@@ -19,14 +27,21 @@ export const planoController = {
   async buscarPorId(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const plano = await prisma.plano.findUnique({
+      const planoRaw = await prisma.plano.findUnique({
         where: { id: parseInt(id) }
       });
 
-      if (!plano) {
+      if (!planoRaw) {
         return res.status(404).json({ error: 'Plano não encontrado' });
       }
-
+      const plano = {
+        id: planoRaw.id,
+        nome: planoRaw.nome,
+        descricao: planoRaw.descricao ?? '',
+        valor: Number(planoRaw.valor),
+        duracao: planoRaw.duracao ?? 0,
+        ativo: planoRaw.ativo ?? true,
+      };
       res.json(plano);
     } catch (error) {
       console.error('Erro ao buscar plano:', error);
@@ -36,19 +51,31 @@ export const planoController = {
 
   async criar(req: Request, res: Response) {
     try {
-      const { nome, valor } = req.body;
-
-      if (!nome || !valor) {
-        return res.status(400).json({ error: 'Nome e valor são obrigatórios' });
+      const { nome, valor, descricao, duracao, ativo } = req.body;
+      
+      if (!nome || valor === undefined) {
+        return res.status(400).json({ message: 'Nome e valor são obrigatórios' });
       }
 
-      const plano = await prisma.plano.create({
+      const duracaoFinal = duracao !== undefined && duracao !== null && duracao !== '' ? parseInt(duracao) : null;
+      const planoRaw = await prisma.plano.create({
         data: {
           nome,
-          valor: parseFloat(valor)
+          valor: parseFloat(valor),
+          descricao,
+          duracao: duracaoFinal,
+          ativo: ativo !== undefined ? Boolean(ativo) : true,
         }
       });
-
+      
+      const plano = {
+        id: planoRaw.id,
+        nome: planoRaw.nome,
+        descricao: planoRaw.descricao ?? '',
+        valor: Number(planoRaw.valor),
+        duracao: planoRaw.duracao ?? 0,
+        ativo: planoRaw.ativo ?? true,
+      };
       res.status(201).json(plano);
     } catch (error) {
       console.error('Erro ao criar plano:', error);
@@ -59,22 +86,35 @@ export const planoController = {
   async atualizar(req: Request, res: Response) {
     try {
       const { id } = req.params;
-      const { nome, valor } = req.body;
+      const { nome, valor, descricao, duracao, ativo } = req.body;
 
-      const plano = await prisma.plano.update({
+      const duracaoFinal = duracao !== undefined && duracao !== null && duracao !== '' ? parseInt(duracao) : undefined;
+
+      const planoRaw = await prisma.plano.update({
         where: { id: parseInt(id) },
         data: {
           nome,
-          valor: valor ? parseFloat(valor) : undefined
+          valor: valor !== undefined ? parseFloat(valor) : undefined,
+          descricao,
+          duracao: duracaoFinal,
+          ativo: ativo !== undefined ? Boolean(ativo) : undefined,
         }
       });
-
+      
+      const plano = {
+        id: planoRaw.id,
+        nome: planoRaw.nome,
+        descricao: planoRaw.descricao ?? '',
+        valor: Number(planoRaw.valor),
+        duracao: planoRaw.duracao ?? 0,
+        ativo: planoRaw.ativo ?? true,
+      };
       res.json(plano);
     } catch (error: any) {
       console.error('Erro ao atualizar plano:', error);
 
       if (error.code === 'P2025') {
-        return res.status(404).json({ error: 'Plano não encontrado' });
+        return res.status(404).json({ message: 'Plano não encontrado' });
       }
 
       res.status(500).json({ error: 'Erro interno do servidor' });
@@ -94,7 +134,7 @@ export const planoController = {
       console.error('Erro ao deletar plano:', error);
 
       if (error.code === 'P2025') {
-        return res.status(404).json({ error: 'Plano não encontrado' });
+        return res.status(404).json({ message: 'Plano não encontrado' });
       }
 
       res.status(500).json({ error: 'Erro interno do servidor' });

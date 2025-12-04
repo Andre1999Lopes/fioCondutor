@@ -1,14 +1,15 @@
 "use client";
 
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { alunosApi, matriculasApi, turmasApi } from "@/lib/api/api";
+import { toast } from "@/lib/hooks/toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Plus, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -62,6 +63,11 @@ function MatriculasContent() {
         dataMatricula: new Date().toISOString().split("T")[0],
         ativa: true,
       });
+      toast.success("Matrícula criada");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao criar matrícula";
+      toast.error(String(msg));
     },
   });
 
@@ -70,11 +76,20 @@ function MatriculasContent() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["matriculas"] });
       queryClient.invalidateQueries({ queryKey: ["dashboard-resumo"] });
+      toast.success("Matrícula excluída");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao excluir matrícula";
+      toast.error(String(msg));
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.alunoId || !formData.turmaId || !formData.dataMatricula) {
+      toast.error("Selecione aluno, turma e data");
+      return;
+    }
     createMutation.mutate(formData);
   };
 
@@ -90,6 +105,7 @@ function MatriculasContent() {
 
   const filteredMatriculas = matriculas?.filter((mat: Matricula) => {
     const matchSearch =
+      search === "" ||
       (mat.alunoNome?.toLowerCase().includes(search.toLowerCase()) || false) ||
       (mat.turmaNome?.toLowerCase().includes(search.toLowerCase()) || false);
     const matchStatus =
@@ -229,7 +245,7 @@ function MatriculasContent() {
                     alunoId: parseInt(e.target.value),
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40"
                 required
               >
                 <option value={0}>Selecione um aluno</option>
@@ -253,7 +269,7 @@ function MatriculasContent() {
                     turmaId: parseInt(e.target.value),
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40"
                 required
               >
                 <option value={0}>Selecione uma turma</option>
@@ -278,7 +294,7 @@ function MatriculasContent() {
                     dataMatricula: e.target.value,
                   })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40"
                 required
               />
             </div>

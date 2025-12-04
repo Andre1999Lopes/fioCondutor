@@ -1,6 +1,7 @@
 "use client";
 
 import { AuthInitializer } from "@/components/auth-provider";
+import { ToastViewport } from "@/components/ui/toast";
 import { AuthProvider } from "@/lib/hooks/use-auth";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
@@ -17,6 +18,7 @@ export function Providers({ children }: { children: React.ReactNode }) {
           <AuthInitializer>{children}</AuthInitializer>
         </AuthProvider>
       </ThemeProvider>
+      <ToastViewport />
       <ReactQueryDevtools initialIsOpen={false} />
     </QueryClientProvider>
   );

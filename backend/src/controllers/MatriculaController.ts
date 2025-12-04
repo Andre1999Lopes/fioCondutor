@@ -4,7 +4,7 @@ import { prisma } from '../database/Client';
 export const matriculaController = {
   async listar(req: Request, res: Response) {
     try {
-      const matriculas = await prisma.matricula.findMany({
+      const matriculasRaw = await prisma.matricula.findMany({
         include: {
           aluno: true,
           turma: true
@@ -13,6 +13,15 @@ export const matriculaController = {
           data_matricula: 'desc'
         }
       });
+      const matriculas = matriculasRaw.map((m: any) => ({
+        id: m.id,
+        alunoId: m.alunoId,
+        turmaId: m.turmaId,
+        dataMatricula: m.data_matricula,
+        ativa: m.ativa ?? true,
+        alunoNome: m.aluno?.nome,
+        turmaNome: m.turma?.nome,
+      }));
       res.json(matriculas);
     } catch (error) {
       console.error('Erro ao listar matrículas:', error);
@@ -25,7 +34,7 @@ export const matriculaController = {
       const { alunoId, turmaId } = req.body;
 
       if (!alunoId || !turmaId) {
-        return res.status(400).json({ error: 'alunoId e turmaId são obrigatórios' });
+        return res.status(400).json({ message: 'alunoId e turmaId são obrigatórios' });
       }
 
       const aluno = await prisma.aluno.findUnique({
@@ -33,7 +42,7 @@ export const matriculaController = {
       });
 
       if (!aluno) {
-        return res.status(404).json({ error: 'Aluno não encontrado' });
+        return res.status(404).json({ message: 'Aluno não encontrado' });
       }
 
       const turma = await prisma.turma.findUnique({
@@ -44,11 +53,11 @@ export const matriculaController = {
       });
 
       if (!turma) {
-        return res.status(404).json({ error: 'Turma não encontrada' });
+        return res.status(404).json({ message: 'Turma não encontrada' });
       }
 
       if (turma.matriculas.length >= turma.vagas_totais) {
-        return res.status(400).json({ error: 'Turma lotada' });
+        return res.status(400).json({ message: 'Turma lotada' });
       }
 
       const matriculaExistente = await prisma.matricula.findFirst({
@@ -59,10 +68,10 @@ export const matriculaController = {
       });
 
       if (matriculaExistente) {
-        return res.status(400).json({ error: 'Aluno já matriculado nesta turma' });
+        return res.status(400).json({ message: 'Aluno já matriculado nesta turma' });
       }
 
-      const matricula = await prisma.matricula.create({
+      const matriculaRaw = await prisma.matricula.create({
         data: {
           alunoId: parseInt(alunoId),
           turmaId: parseInt(turmaId)
@@ -73,12 +82,21 @@ export const matriculaController = {
         }
       });
 
+      const matricula = {
+        id: matriculaRaw.id,
+        alunoId: matriculaRaw.alunoId,
+        turmaId: matriculaRaw.turmaId,
+        dataMatricula: matriculaRaw.data_matricula,
+        ativa: matriculaRaw.ativa ?? true,
+        alunoNome: matriculaRaw.aluno?.nome,
+        turmaNome: matriculaRaw.turma?.nome,
+      };
       res.status(201).json(matricula);
     } catch (error: any) {
       console.error('Erro ao matricular aluno:', error);
 
       if (error.code === 'P2003') {
-        return res.status(400).json({ error: 'Aluno ou turma não encontrados' });
+        return res.status(400).json({ message: 'Aluno ou turma não encontrados' });
       }
 
       res.status(500).json({ error: 'Erro interno do servidor' });
@@ -98,7 +116,7 @@ export const matriculaController = {
       console.error('Erro ao desmatricular aluno:', error);
 
       if (error.code === 'P2025') {
-        return res.status(404).json({ error: 'Matrícula não encontrada' });
+        return res.status(404).json({ message: 'Matrícula não encontrada' });
       }
 
       res.status(500).json({ error: 'Erro interno do servidor' });
@@ -109,7 +127,7 @@ export const matriculaController = {
     try {
       const { turmaId } = req.params;
 
-      const matriculas = await prisma.matricula.findMany({
+      const matriculasRaw = await prisma.matricula.findMany({
         where: { turmaId: parseInt(turmaId) },
         include: {
           aluno: true
@@ -121,6 +139,15 @@ export const matriculaController = {
         }
       });
 
+      const matriculas = matriculasRaw.map((m: any) => ({
+        id: m.id,
+        alunoId: m.alunoId,
+        turmaId: m.turmaId,
+        dataMatricula: m.data_matricula,
+        ativa: m.ativa ?? true,
+        alunoNome: m.aluno?.nome,
+        turmaNome: m.turma?.nome,
+      }));
       res.json(matriculas);
     } catch (error) {
       console.error('Erro ao listar matrículas por turma:', error);

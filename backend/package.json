@@ -2,16 +2,17 @@
   "name": "fio-condutor",
   "version": "1.0.0",
   "description": "Sistema de Gestão de Ateliê de Costura - Backend API",
-  "main": "dist/server.js",
+  "main": "dist/src/server.js",
   "license": "UNLICENSED",
   "private": true,
   "author": "André Júnior Lopes Cardoso",
   "scripts": {
     "dev": "nodemon",
     "build": "tsc",
-    "start": "node --trace-warnings dist/server.js",
+    "start": "node --trace-warnings dist/src/server.js",
     "prisma:generate": "prisma generate",
-    "prisma:migrate": "prisma migrate dev"
+    "prisma:migrate": "prisma migrate dev",
+    "prisma:seed": "prisma db seed"
   },
   "dependencies": {
     "@prisma/client": "^6.19.0",
@@ -36,5 +37,8 @@
     "ts-node": "^10.9.2",
     "ts-node-dev": "^2.0.0",
     "typescript": "^5.9.3"
+  },
+  "prisma": {
+    "seed": "ts-node --project prisma/tsconfig.seed.json prisma/seed.ts"
   }
 }

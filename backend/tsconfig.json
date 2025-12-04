@@ -3,8 +3,9 @@
     "target": "ES2020",
     "module": "nodenext",
     "lib": ["ES2020"],
+    "types": ["node"],
     "outDir": "./dist",
-    "rootDir": "./src",
+    "rootDir": ".",
     
     "strict": true,
     "esModuleInterop": true,
@@ -16,6 +17,9 @@
     "declarationMap": false,
     "sourceMap": true
   },
-  "include": ["src/**/*", "../prisma/prisma.config.ts"],
+  "include": [
+    "src/**/*",
+    "prisma/**/*.ts"
+  ],
   "exclude": ["node_modules", "dist"]
 }

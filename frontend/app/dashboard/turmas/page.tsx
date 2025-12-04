@@ -3,6 +3,7 @@
 import { Dialog, DialogContent, DialogFooter, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { turmasApi } from "@/lib/api/api";
+import { toast } from "@/lib/hooks/toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Edit2, Plus, Search, Trash2, Users } from "lucide-react";
 import { useState } from "react";
@@ -50,6 +51,11 @@ function TurmasContent() {
         capacidadeMaxima: 20,
         ativa: true,
       });
+      toast.success("Turma criada com sucesso");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao criar turma";
+      toast.error(String(msg));
     },
   });
 
@@ -68,6 +74,11 @@ function TurmasContent() {
         capacidadeMaxima: 20,
         ativa: true,
       });
+      toast.success("Turma atualizada");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao atualizar turma";
+      toast.error(String(msg));
     },
   });
 
@@ -75,11 +86,21 @@ function TurmasContent() {
     mutationFn: (id: number) => turmasApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["turmas"] });
+      toast.success("Turma excluída");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao excluir turma";
+      toast.error(String(msg));
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    // Validação simples para evitar erro "todos os campos são obrigatórios"
+    if (!formData.nome || !formData.horario || !formData.diasSemana || !formData.capacidadeMaxima) {
+      toast.error("Preencha todos os campos obrigatórios");
+      return;
+    }
     if (editingId) {
       updateMutation.mutate(formData);
     } else {

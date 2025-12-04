@@ -113,17 +113,32 @@ function DashboardContent() {
                 <tr className='text-left text-gray-600 font-medium'>
                   <th className='py-2'>Aluno</th>
                   <th className='py-2'>Valor Devido</th>
-                  <th className='py-2'>Dias em Atraso</th>
+                  <th className='py-2'>Situação</th>
                 </tr>
               </thead>
               <tbody>
-                {inadimplencia.slice(0, 5).map((item: any, idx: number) => (
-                  <tr key={idx} className='border-b hover:bg-gray-50'>
-                    <td className='py-3'>{item.alunoNome}</td>
-                    <td className='py-3 font-semibold text-red-600'>R$ {item.valorDevido?.toFixed(2)}</td>
-                    <td className='py-3'>{item.diasAtraso} dias</td>
-                  </tr>
-                ))}
+                {inadimplencia.slice(0, 5).map((item: any, idx: number) => {
+                  const hoje = new Date();
+                  const dataVencimento = new Date(item.dataVencimento);
+                  const diasRestantes = Math.ceil(
+                    (dataVencimento.getTime() - hoje.getTime()) / (1000 * 60 * 60 * 24)
+                  );
+                  const isVencido = diasRestantes < 0;
+                  const label = isVencido
+                    ? `${Math.abs(diasRestantes)} dias em atraso`
+                    : `Vence em ${diasRestantes} dias`;
+                  const corTexto = isVencido ? 'text-red-600' : 'text-blue-600';
+
+                  return (
+                    <tr key={idx} className='border-b hover:bg-gray-50'>
+                      <td className='py-3'>{item.alunoNome}</td>
+                      <td className='py-3 font-semibold text-red-600'>
+                        R$ {item.valorDevido?.toFixed(2)}
+                      </td>
+                      <td className={`py-3 font-medium ${corTexto}`}>{label}</td>
+                    </tr>
+                  );
+                })}
               </tbody>
             </table>
           </div>

@@ -1,14 +1,15 @@
 "use client";
 
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Aluno, alunosApi } from "@/lib/api/api";
+import { toast } from "@/lib/hooks/toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { Edit2, Plus, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -47,6 +48,11 @@ function AlunosContent() {
         endereco: "",
         observacoes: "",
       });
+      toast.success("Aluno criado com sucesso");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao criar aluno";
+      toast.error(String(msg));
     },
   });
 
@@ -66,6 +72,11 @@ function AlunosContent() {
         endereco: "",
         observacoes: "",
       });
+      toast.success("Aluno atualizado");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao atualizar aluno";
+      toast.error(String(msg));
     },
   });
 
@@ -73,11 +84,20 @@ function AlunosContent() {
     mutationFn: (id: number) => alunosApi.delete(id),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["alunos"] });
+      toast.success("Aluno excluído");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao excluir aluno";
+      toast.error(String(msg));
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.nome || !formData.email) {
+      toast.error("Nome e email são obrigatórios");
+      return;
+    }
     if (editingId) {
       updateMutation.mutate(formData);
     } else {
@@ -331,7 +351,7 @@ function AlunosContent() {
               <button
                 type="submit"
                 disabled={createMutation.isPending || updateMutation.isPending}
-                className="px-4 py-2 bg-yellow-600 text-white rounded-lg hover:bg-yellow-700 disabled:opacity-50"
+                className="px-4 py-2 bg-primary text-white rounded-lg hover:opacity-90 disabled:opacity-50"
               >
                 {editingId ? "Atualizar" : "Criar"}
               </button>

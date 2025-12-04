@@ -4,6 +4,9 @@ import { prisma } from '../database/Client';
 export const dashboardController = {
   async resumo(req: Request, res: Response) {
     try {
+      const hoje = new Date();
+      const proximosSete = new Date(hoje.getTime() + 7 * 24 * 60 * 60 * 1000);
+
       const [totalAlunos, totalTurmas, turmasAtivas, totalMatriculas, pagamentosEsteMes, inadimplentes] =
         await Promise.all([
           prisma.aluno.count(),
@@ -13,18 +16,45 @@ export const dashboardController = {
           prisma.pagamento.aggregate({
             _sum: { valor: true },
             where: {
-              data_pagamento: {
+              OR: [
+                { status: 'Pago' },
+                { status: 'pago' }
+              ],
+              createdAt: {
                 gte: new Date(new Date().getFullYear(), new Date().getMonth(), 1),
                 lte: new Date(new Date().getFullYear(), new Date().getMonth() + 1, 0)
-              },
-              status: 'Pago'
+              }
             }
           }),
 
           prisma.pagamento.count({
             where: {
-              status: 'Pendente',
-              data_vencimento: { lt: new Date() }
+              OR: [
+                {
+                  AND: [
+                    {
+                      OR: [
+                        { status: 'Pendente' },
+                        { status: 'pendente' },
+                        { status: 'Vencido' },
+                        { status: 'vencido' }
+                      ]
+                    },
+                    { data_vencimento: { lt: hoje } }
+                  ]
+                },
+                {
+                  AND: [
+                    {
+                      OR: [
+                        { status: 'Pendente' },
+                        { status: 'pendente' }
+                      ]
+                    },
+                    { data_vencimento: { gte: hoje, lte: proximosSete } }
+                  ]
+                }
+              ]
             }
           })
         ]);
@@ -45,10 +75,37 @@ export const dashboardController = {
 
   async inadimplenciaDetalhada(req: Request, res: Response) {
     try {
+      const hoje = new Date();
+      const proximosSete = new Date(hoje.getTime() + 7 * 24 * 60 * 60 * 1000);
+
       const inadimplentes = await prisma.pagamento.findMany({
         where: {
-          status: 'Pendente',
-          data_vencimento: { lt: new Date() }
+          OR: [
+            {
+              AND: [
+                {
+                  OR: [
+                    { status: 'Pendente' },
+                    { status: 'pendente' },
+                    { status: 'Vencido' },
+                    { status: 'vencido' }
+                  ]
+                },
+                { data_vencimento: { lt: hoje } }
+              ]
+            },
+            {
+              AND: [
+                {
+                  OR: [
+                    { status: 'Pendente' },
+                    { status: 'pendente' }
+                  ]
+                },
+                { data_vencimento: { gte: hoje, lte: proximosSete } }
+              ]
+            }
+          ]
         },
         include: {
           aluno: {

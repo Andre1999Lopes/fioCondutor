@@ -1,14 +1,15 @@
 "use client";
 
 import {
-  Dialog,
-  DialogContent,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
+    Dialog,
+    DialogContent,
+    DialogFooter,
+    DialogHeader,
+    DialogTitle,
 } from "@/components/ui/dialog";
 import { Skeleton } from "@/components/ui/skeleton";
-import { alunosApi, pagamentosApi } from "@/lib/api/api";
+import { alunosApi, pagamentosApi, planosApi } from "@/lib/api/api";
+import { toast } from "@/lib/hooks/toast";
 import { useMutation, useQuery, useQueryClient } from "@tanstack/react-query";
 import { AlertCircle, CheckCircle, Plus, Search, Trash2 } from "lucide-react";
 import { useState } from "react";
@@ -30,8 +31,7 @@ function PagamentosContent() {
   const [filterStatus, setFilterStatus] = useState<string>("todos");
   const [formData, setFormData] = useState<Partial<Pagamento>>({
     alunoId: 0,
-    valor: 0,
-    dataPagamento: new Date().toISOString().split("T")[0],
+    dataPagamento: "",
     dataVencimento: "",
     status: "pendente",
     descricao: "",
@@ -47,20 +47,23 @@ function PagamentosContent() {
     queryFn: () => alunosApi.getAll().then((res) => res.data),
   });
 
+  const { data: planos } = useQuery({
+    queryKey: ["planos"],
+    queryFn: () => planosApi.getAll().then((res) => res.data),
+  });
+
   const createMutation = useMutation({
     mutationFn: (data: Partial<Pagamento>) => pagamentosApi.create(data),
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pagamentos"] });
       queryClient.invalidateQueries({ queryKey: ["dashboard-resumo"] });
       setIsDialogOpen(false);
-      setFormData({
-        alunoId: 0,
-        valor: 0,
-        dataPagamento: new Date().toISOString().split("T")[0],
-        dataVencimento: "",
-        status: "pendente",
-        descricao: "",
-      });
+      setFormData({ alunoId: 0, dataPagamento: "", dataVencimento: "", status: "pendente", descricao: "" });
+      toast.success("Pagamento criado");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao criar pagamento";
+      toast.error(String(msg));
     },
   });
 
@@ -70,6 +73,11 @@ function PagamentosContent() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pagamentos"] });
       queryClient.invalidateQueries({ queryKey: ["dashboard-resumo"] });
+      toast.success("Status atualizado");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao atualizar status";
+      toast.error(String(msg));
     },
   });
 
@@ -78,23 +86,25 @@ function PagamentosContent() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["pagamentos"] });
       queryClient.invalidateQueries({ queryKey: ["dashboard-resumo"] });
+      toast.success("Pagamento excluído");
+    },
+    onError: (err: any) => {
+      const msg = err?.response?.data?.message || err?.message || "Erro ao excluir pagamento";
+      toast.error(String(msg));
     },
   });
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formData.alunoId || !formData.descricao || !formData.dataVencimento) {
+      toast.error("Preencha aluno, descrição e vencimento");
+      return;
+    }
     createMutation.mutate(formData);
   };
 
   const handleNew = () => {
-    setFormData({
-      alunoId: 0,
-      valor: 0,
-      dataPagamento: new Date().toISOString().split("T")[0],
-      dataVencimento: "",
-      status: "pendente",
-      descricao: "",
-    });
+    setFormData({ alunoId: 0, dataPagamento: "", dataVencimento: "", status: "pendente", descricao: "" });
     setIsDialogOpen(true);
   };
 
@@ -306,22 +316,27 @@ function PagamentosContent() {
 
             <div>
               <label className="block text-sm font-medium text-gray-700 mb-1">
-                Valor (R$)
+                Plano
               </label>
-              <input
-                type="number"
-                step="0.01"
-                min="0"
-                value={formData.valor || 0}
+              <select
+                value={(formData as any).planoId || 0}
                 onChange={(e) =>
                   setFormData({
                     ...formData,
-                    valor: parseFloat(e.target.value),
+                    // @ts-expect-error dynamic field
+                    planoId: parseInt(e.target.value),
                   })
                 }
                 className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40"
                 required
-              />
+              >
+                <option value={0}>Selecione um plano</option>
+                {planos?.map((plano: any) => (
+                  <option key={plano.id} value={plano.id}>
+                    {plano.nome} — R$ {Number(plano.valor).toFixed(2)}
+                  </option>
+                ))}
+              </select>
             </div>
 
             <div>
@@ -334,7 +349,7 @@ function PagamentosContent() {
                 onChange={(e) =>
                   setFormData({ ...formData, dataVencimento: e.target.value })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40"
                 required
               />
             </div>
@@ -348,13 +363,30 @@ function PagamentosContent() {
                 onChange={(e) =>
                   setFormData({ ...formData, status: e.target.value as any })
                 }
-                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-yellow-500"
+                className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40"
               >
                 <option value="pendente">Pendente</option>
                 <option value="pago">Pago</option>
                 <option value="vencido">Vencido</option>
               </select>
             </div>
+
+            {formData.status === "pago" && (
+              <div>
+                <label className="block text-sm font-medium text-gray-700 mb-1">
+                  Data de Pagamento
+                </label>
+                <input
+                  type="date"
+                  value={formData.dataPagamento || ""}
+                  onChange={(e) =>
+                    setFormData({ ...formData, dataPagamento: e.target.value })
+                  }
+                  className="w-full px-3 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-primary/40"
+                  required
+                />
+              </div>
+            )}
 
             <DialogFooter>
               <button
