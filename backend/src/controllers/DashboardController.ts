@@ -118,7 +118,7 @@ export const dashboardController = {
         }
       });
 
-      const resultado = inadimplentes.map((item) => {
+      const resultado = inadimplentes.map((item: any) => {
         const diasAtraso = Math.floor(
           (new Date().getTime() - new Date(item.data_vencimento).getTime()) / (1000 * 60 * 60 * 24)
         );
@@ -152,7 +152,7 @@ export const dashboardController = {
         }
       });
 
-      const estatisticas = turmasComMatriculas.map((turma) => ({
+      const estatisticas = turmasComMatriculas.map((turma: any) => ({
         id: turma.id,
         nome: turma.nome,
         vagasTotais: turma.vagas_totais,
