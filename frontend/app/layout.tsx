@@ -6,7 +6,7 @@ import './globals.css';
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: 'Fio Condutor - Escola de Corte e Costura',
+  title: 'Ateliê Ponto a Ponto - Escola de Corte e Costura',
   description: 'Sistema de gestão para escola de corte e costura',
   icons: {
     icon: '/logo-optimized.webp',

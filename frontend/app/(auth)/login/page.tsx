@@ -2,8 +2,7 @@
 
 import { authApi } from '@/lib/api/api';
 import { useAuthStore } from '@/store/auth-store';
-import { Lock, Mail, User } from 'lucide-react';
-import Link from 'next/link';
+import { Lock, Mail } from 'lucide-react';
 import { useRouter } from 'next/navigation';
 import { useState } from 'react';
 
@@ -38,8 +37,8 @@ export default function LoginPage() {
   return (
     <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-background p-4'>
       <div className='flex flex-col items-center'>
-        <img src='/logo-optimized.webp' alt='Fio Condutor' className='h-32 w-32 logo-custom-rounded' loading='lazy' />
-        <h1 className='mt-4 text-2xl font-bold text-gray-900'>Fio Condutor</h1>
+        <img src='/logo-optimized.webp' alt='Ponto a Ponto' className='h-32 w-32 logo-custom-rounded' loading='lazy' />
+        <h1 className='mt-4 text-2xl font-bold text-gray-900'>Ateliê Ponto a Ponto</h1>
         <p className='text-gray-600'>Escola de Corte e Costura</p>
 
         <form onSubmit={handleSubmit} className='space-y-4 w-full'>

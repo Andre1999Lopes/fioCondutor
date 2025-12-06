@@ -12,7 +12,7 @@ export function Header() {
   return (
     <header className='sticky top-0 z-50 flex h-16 items-center gap-4 border-b bg-background px-6'>
       <div className='flex flex-1 items-center gap-4'>
-        <h1 className='text-lg font-semibold md:text-xl'>Fio Condutor - Escola de Corte e Costura</h1>
+        <h1 className='text-lg font-semibold md:text-xl'>Ateliê Ponto a Ponto - Escola de Corte e Costura</h1>
       </div>
 
       <div className='flex items-center gap-4'>

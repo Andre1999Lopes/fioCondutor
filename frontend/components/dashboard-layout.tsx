@@ -43,11 +43,11 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
           <Link href='/dashboard' className='flex items-center gap-3 hover:opacity-80 transition-opacity'>
             <img
               src='/logo-optimized.webp'
-              alt='Fio Condutor'
+              alt='Ponto a Ponto'
               className='h-12 w-12 logo-custom-rounded'
               loading='lazy'
             />
-            <h1 className='text-xl font-bold'>Fio Condutor</h1>
+            <h1 className='text-xl font-bold'>Ateliê Ponto a Ponto</h1>
           </Link>
           <button onClick={() => setSidebarOpen(false)} className='lg:hidden'>
             <X className='h-5 w-5' />
