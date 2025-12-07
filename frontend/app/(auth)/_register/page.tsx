@@ -51,7 +51,7 @@ export default function RegisterPage() {
   return (
     <div className='min-h-screen flex items-center justify-center bg-gradient-to-br from-primary/5 to-background p-4'>
       <div className='w-full max-w-md rounded-xl shadow-lg p-8 flex flex-col items-center'>
-        <img src='/logo-optimized.webp' alt='Ponto a Ponto' className='h-32 w-32 logo-custom-rounded' loading='lazy' />
+        <img src='/logo-no-background.webp' alt='Ponto a Ponto' className='w-40 h-auto object-contain logo-custom-rounded' loading='lazy' />
         <h1 className='mt-4 text-2xl font-bold text-gray-900'>Ateliê Ponto a Ponto</h1>
         <p className='text-gray-600'>Escola de Corte e Costura</p>
 

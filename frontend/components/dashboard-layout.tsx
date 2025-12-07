@@ -42,9 +42,9 @@ export function DashboardLayout({ children }: { children: React.ReactNode }) {
         <div className='flex h-16 items-center justify-between border-b border-primary/20 px-6'>
           <Link href='/dashboard' className='flex items-center gap-3 hover:opacity-80 transition-opacity'>
             <img
-              src='/logo-optimized.webp'
+              src='/logo-green-background.webp'
               alt='Ponto a Ponto'
-              className='h-12 w-12 logo-custom-rounded'
+              className='w-12 h-auto object-contain'
               loading='lazy'
             />
             <h1 className='text-xl font-bold'>Ateliê Ponto a Ponto</h1>

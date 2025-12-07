@@ -9,8 +9,8 @@ export const metadata: Metadata = {
   title: 'Ateliê Ponto a Ponto - Escola de Corte e Costura',
   description: 'Sistema de gestão para escola de corte e costura',
   icons: {
-    icon: '/logo-optimized.webp',
-    apple: '/logo-optimized.webp'
+    icon: '/logo-no-background.webp',
+    apple: '/logo-no-background.webp'
   }
 };
 
