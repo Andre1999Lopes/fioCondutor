@@ -7,7 +7,17 @@ echo   FIO CONDUTOR - PARANDO SERVIÇOS
 echo ====================================
 echo.
 
-echo [1/3] Parando containers Docker...
+echo [1/3] Parando processos PM2...
+pm2 stop all >nul 2>&1
+pm2 delete all >nul 2>&1
+if %ERRORLEVEL% EQU 0 (
+    echo [✓] Processos PM2 parados!
+) else (
+    echo [!] Nenhum processo PM2 ativo ou erro ao parar.
+)
+echo.
+
+echo [2/3] Parando containers Docker...
 cd backend\src\database
 docker-compose -f compose.yaml down
 if %ERRORLEVEL% EQU 0 (
@@ -18,12 +28,6 @@ if %ERRORLEVEL% EQU 0 (
 echo.
 
 cd ..\..\..
-
-echo [2/3] Encerrando processos Node.js (backend e frontend)...
-taskkill /F /FI "WINDOWTITLE eq Fio Condutor - Backend*" > nul 2>&1
-taskkill /F /FI "WINDOWTITLE eq Fio Condutor - Frontend*" > nul 2>&1
-echo [✓] Processos Node.js encerrados!
-echo.
 
 echo [3/3] Limpando...
 echo [✓] Limpeza concluída!

@@ -24,10 +24,11 @@
 
 ### 🪟 Windows - Método Rápido
 
-1. **Duplo clique em `start.bat`** na raiz do projeto
-2. Aguarde os serviços iniciarem
-3. O navegador abrirá automaticamente em http://localhost:3000
-4. Faça login ou crie uma conta
+1. Siga os passos descritos em `SCRIPTS_WINDOWS.md` (incluindo preencher as variáveis de ambiente de exemplo em `backend/.env` e `frontend/.env.local`) antes de executar o `start.bat`.  
+2. **Duplo clique em `start.bat`** na raiz do projeto
+3. Aguarde os serviços iniciarem
+4. O navegador abrirá automaticamente em http://localhost:3000
+5. Faça login ou crie uma conta
 
 **Para parar:** Duplo clique em `stop.bat`
 

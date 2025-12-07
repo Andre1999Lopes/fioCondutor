@@ -76,19 +76,24 @@
    ```
 
 2. **Configure as variáveis de ambiente:**
+   
+   **Observação:** os valores abaixo são apenas exemplos. Ajuste portas, URLs, senhas e demais valores conforme o seu ambiente antes de executar os scripts.
 
    **Backend** (`backend/.env`):
 
    ```env
    DATABASE_URL="postgresql://admin:senha123@localhost:5432/fio_condutor"
    JWT_SECRET="seu-secret-super-seguro-aqui"
-   PORT=3001
+   PORT=3005
+   ADMIN_EMAIL="admin@admin.com"
+   ADMIN_NAME="Administrador"
+   ADMIN_PASSWORD="Admin1238@"
    ```
 
    **Frontend** (`frontend/.env.local`):
 
    ```env
-   NEXT_PUBLIC_API_URL=http://localhost:3001/api
+   NEXT_PUBLIC_API_URL=http://localhost:3005/api
    ```
 
 3. **Execute as migrações do banco de dados:**

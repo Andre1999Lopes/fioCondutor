@@ -1,8 +1,8 @@
+import cookieParser from 'cookie-parser';
 import cors from 'cors';
+import dotenv from 'dotenv';
 import express from 'express';
 import routes from './routes';
-import cookieParser from 'cookie-parser';
-import dotenv from 'dotenv';
 
 dotenv.config();
 
@@ -43,7 +43,7 @@ app.use((req, res) => {
   res.status(404).json({ error: 'Rota não encontrada' });
 });
 
-app.listen(port, () => {
+const server = app.listen(port, () => {
   console.log(`🚀 Servidor rodando na porta ${port}`);
   console.log(`📊 Health check: http://localhost:${port}/health`);
   console.log(`👥 Alunos: http://localhost:${port}/api/alunos`);
