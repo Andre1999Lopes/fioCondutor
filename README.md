@@ -1,6 +1,6 @@
-# 🎨 Fio Condutor - Sistema de Gestão do Ateliê Ponto a Ponto
+# 🎨 Fio Condutor - Sistema de Gestão do [Ateliê Ponto a Ponto](https://instagram.com/pontoapontomoc)
 
-> **Solução simples** para gerenciar alunos, turmas, matrículas e pagamentos de uma escola de corte e costura.
+> **Solução simples** para gerenciar alunos, turmas, matrículas e pagamentos da escola de corte e costura Ponto a Ponto.
 
 ![Status](https://img.shields.io/badge/status-production%20ready-brightgreen)
 ![Version](https://img.shields.io/badge/version-1.0-blue)
@@ -56,130 +56,26 @@ npx prisma migrate dev
 
 ---
 
-## 📦 O que foi Entregue
+## 📦 O que foi entregue (resumo)
 
-### 🖥️ Sistema Completo com 7 Páginas
+Este repositório contém a API backend e a aplicação frontend do sistema Fio Condutor. Principais entregáveis:
 
-#### 1. 🔐 **Autenticação**
+- Autenticação (login e registro)
+- Dashboard com métricas e lista de inadimplências
+- Gestão de alunos (CRUD e busca)
+- Gestão de turmas (CRUD e ativação)
+- Controle de matrículas (matricular/desmatricular, filtros)
+- Gestão de pagamentos (registrar, marcar como pago, relatórios)
 
-- **Login** - Acesso ao sistema
-- **Registro** - Criar nova conta
+### ✅ Recursos principais
 
-#### 2. 📊 **Dashboard**
+- Interface responsiva e feedbacks visuais
+- Autenticação segura (JWT) e senhas criptografadas
+- Formulários validados, filtros de busca e ordenação
+- Scripts automatizados para iniciar a stack no Windows (`start.bat` / `stop.bat`)
+- TypeScript e Prisma para integridade e tipagem
 
-- Resumo geral do ateliê
-- Total de alunos cadastrados
-- Quantidade de turmas ativas
-- Total de matrículas
-- Arrecadação mensal
-- Lista de inadimplências
-
-#### 3. 👥 **Gestão de Alunos**
-
-- Visualizar todos os alunos
-- Cadastrar novo aluno
-- Editar informações
-- Excluir aluno
-- Buscar por nome ou email
-
-#### 4. 🏫 **Gestão de Turmas**
-
-- Visualizar todas as turmas
-- Criar nova turma
-- Editar turma (horários, dias, capacidade)
-- Excluir turma
-- Marcar turma como ativa/inativa
-
-#### 5. 📝 **Controle de Matrículas**
-
-- Matricular aluno em turma
-- Ver todas as matrículas
-- Desmatricular aluno
-- Filtrar por status
-
-#### 6. 💰 **Gestão de Pagamentos**
-
-- Registrar novo pagamento
-- Marcar pagamento como pago
-- Ver pagamentos pendentes e vencidos
-- Filtrar por status (pago/pendente/vencido)
-- Excluir pagamento
-
-### ✅ Recursos Implementados
-
-- ✅ **Interface Responsiva** - Funciona em desktop, tablet e celular
-- ✅ **Autenticação Segura** - Login com senha criptografada
-- ✅ **Busca e Filtros** - Encontre informações rapidamente
-- ✅ **Formulários Validados** - Previne erros de entrada
-- ✅ **Feedback Visual** - Mensagens de sucesso e erro
-- ✅ **Carregamento Suave** - Indicadores de loading
-- ✅ **Scripts Automatizados** - Inicie tudo com um clique (Windows)
-
-### 🎨 Design Profissional
-
-- Interface limpa e moderna
-- Cores harmoniosas
-- Ícones intuitivos
-- Layout organizado
-- Fácil navegação
-
----
-
-## Funcionalidades
-
-### 🔐 Login e Segurança
-
-- Login com email e senha
-- Registro de novos usuários
-- Senha criptografada
-- Sessão persistente
-- Logout automático em caso de erro
-
-### 👥 Alunos
-
-- Cadastrar novo aluno com todas as informações
-- Editar dados dos alunos
-- Excluir aluno do sistema
-- Buscar aluno por nome ou email
-- Ver lista completa de alunos
-
-### 🏫 Turmas
-
-- Criar turmas com horários e dias da semana
-- Definir capacidade máxima de alunos
-- Editar informações da turma
-- Desativar/ativar turmas
-- Excluir turmas
-- Visualizar turmas em cards organizados
-
-### Matrículas
-
-- Matricular aluno em turma disponível
-- Ver todas as matrículas ativas
-- Desmatricular aluno
-- Filtrar matrículas por status
-- Ver histórico de matrículas
-
-### 💰 Pagamentos
-
-- Registrar pagamentos de alunos
-- Marcar pagamentos como "pago"
-- Ver pagamentos pendentes
-- Identificar pagamentos vencidos
-- Filtrar por status (pago/pendente/vencido)
-- Excluir registros de pagamento
-- Acompanhar arrecadação
-
-### 📊 Dashboard Central
-
-- Visualizar total de alunos
-- Ver quantidade de turmas ativas
-- Conferir total de matrículas
-- Acompanhar arrecadação do mês
-- Lista de alunos inadimplentes
-- Resumo geral do ateliê
-
----
+> Para instruções completas de uso e configuração (variáveis de ambiente, build, migrações), veja a seção **Como Usar** acima e o arquivo `SCRIPTS_WINDOWS.md`.
 
 ## 📄 Licença
 
@@ -217,7 +113,7 @@ Copyright © 2025 - Todos os direitos reservados
 
 ## Sobre o Projeto
 
-O **Fio Condutor** é um sistema completo de gestão desenvolvido especialmente para ateliês de costura.
+O **Fio Condutor** é um sistema completo de gestão desenvolvido especialmente para a escola de corte e costura Ponto a Ponto.
 
 Com ele, você pode:
 
@@ -231,8 +127,6 @@ Com ele, você pode:
 
 ---
 
-**Fio Condutor** - Gestão inteligente para seu ateliê 🧵
-
 ## ⭐ Features Highlights
 
 🌟 **Autenticação completa** com JWT  
@@ -241,10 +135,6 @@ Com ele, você pode:
 🌟 **100% responsivo** em todos os dispositivos  
 🌟 **TypeScript** para type safety  
 🌟 **Documentação completa** com 8 arquivos
-
----
-
-**Pronto para usar? Comece em [INICIO_RAPIDO.md](./INICIO_RAPIDO.md)** 🚀
 
 ---
 
