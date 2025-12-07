@@ -1,163 +1,80 @@
 {
   "info": {
-    "name": "Fio Condutor API - Completa",
+    "name": "Fio Condutor API",
     "description": "API completa do sistema Fio Condutor - Gestão de Escola de Corte e Costura",
-    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
-    "version": "2.0.0"
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
   },
-  "auth": {
-    "type": "bearer",
-    "bearer": [
-      {
-        "key": "token",
-        "value": "{{token}}",
-        "type": "string"
-      }
-    ]
-  },
-  "variable": [
-    {
-      "key": "base_url",
-      "value": "http://localhost:3005/api",
-      "type": "string"
-    },
-    {
-      "key": "token",
-      "value": "",
-      "type": "string"
-    }
-  ],
   "item": [
     {
-      "name": "Autenticação",
-      "item": [
-        {
-          "name": "Registrar",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 201) {",
-                  "    const response = pm.response.json();",
-                  "    if (response.token) {",
-                  "        pm.collectionVariables.set('token', response.token);",
-                  "    }",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
+      "name": "Saúde",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "auth": {
+          "type": "noauth"
+        },
+        "description": "",
+        "url": {
+          "raw": "{{base_url}}/health",
+          "protocol": "",
+          "host": [
+            "{{base_url}}"
           ],
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"nome\": \"Usuário Teste\",\n  \"email\": \"teste@exemplo.com\",\n  \"senha\": \"senha123\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/auth/registrar",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "registrar"]
-            }
-          }
-        },
-        {
-          "name": "Login",
-          "event": [
-            {
-              "listen": "test",
-              "script": {
-                "exec": [
-                  "if (pm.response.code === 200) {",
-                  "    const response = pm.response.json();",
-                  "    if (response.token) {",
-                  "        pm.collectionVariables.set('token', response.token);",
-                  "    }",
-                  "}"
-                ],
-                "type": "text/javascript"
-              }
-            }
+          "path": [
+            "health"
           ],
-          "request": {
-            "auth": {
-              "type": "noauth"
-            },
-            "method": "POST",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"email\": \"teste@exemplo.com\",\n  \"senha\": \"senha123\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/auth/login",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "login"]
-            }
-          }
-        },
-        {
-          "name": "Buscar Perfil",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/auth/perfil",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "perfil"]
-            }
-          }
-        },
-        {
-          "name": "Atualizar Perfil",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"nome\": \"Nome Atualizado\",\n  \"email\": \"novoemail@exemplo.com\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/auth/perfil",
-              "host": ["{{base_url}}"],
-              "path": ["auth", "perfil"]
-            }
-          }
+          "query": [],
+          "variable": []
         }
-      ]
+      }
     },
     {
       "name": "Alunos",
       "item": [
         {
-          "name": "Listar Alunos",
+          "name": "Atualizar Aluno",
           "request": {
-            "method": "GET",
-            "header": [],
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Atualizar informações do aluno",
             "url": {
-              "raw": "{{base_url}}/alunos",
-              "host": ["{{base_url}}"],
-              "path": ["alunos"]
+              "raw": "{{base_url}}/api/alunos/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "alunos",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Maria Santos Atualizado\",\n  \"telefone\": \"11988888888\",\n  \"endereco\": \"Rua Nova, 456\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -165,11 +82,31 @@
           "name": "Buscar Aluno por ID",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Buscar aluno específico por ID",
             "url": {
-              "raw": "{{base_url}}/alunos/1",
-              "host": ["{{base_url}}"],
-              "path": ["alunos", "1"]
+              "raw": "{{base_url}}/api/alunos/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "alunos",
+                "1"
+              ],
+              "query": [],
+              "variable": []
             }
           }
         },
@@ -180,38 +117,42 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"nome\": \"Maria Silva\",\n  \"email\": \"maria@exemplo.com\",\n  \"telefone\": \"(11) 98765-4321\",\n  \"cpf\": \"123.456.789-00\",\n  \"endereco\": \"Rua Exemplo, 123\",\n  \"dataNascimento\": \"1990-05-15\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/alunos",
-              "host": ["{{base_url}}"],
-              "path": ["alunos"]
-            }
-          }
-        },
-        {
-          "name": "Atualizar Aluno",
-          "request": {
-            "method": "PUT",
-            "header": [
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
               {
-                "key": "Content-Type",
-                "value": "application/json"
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
               }
             ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Criar novo aluno",
+            "url": {
+              "raw": "{{base_url}}/api/alunos",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "alunos"
+              ],
+              "query": [],
+              "variable": []
+            },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Maria Silva Santos\",\n  \"telefone\": \"(11) 91234-5678\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/alunos/1",
-              "host": ["{{base_url}}"],
-              "path": ["alunos", "1"]
+              "raw": "{\n  \"nome\": \"Maria Santos\",\n  \"email\": \"maria@example.com\",\n  \"telefone\": \"11999999999\",\n  \"cpf\": \"12345678901\",\n  \"endereco\": \"Rua das Flores, 123\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -219,239 +160,288 @@
           "name": "Deletar Aluno",
           "request": {
             "method": "DELETE",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Deletar aluno",
             "url": {
-              "raw": "{{base_url}}/alunos/1",
-              "host": ["{{base_url}}"],
-              "path": ["alunos", "1"]
+              "raw": "{{base_url}}/api/alunos/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "alunos",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Listar Alunos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Listar todos os alunos",
+            "url": {
+              "raw": "{{base_url}}/api/alunos",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "alunos"
+              ],
+              "query": [],
+              "variable": []
             }
           }
         }
       ]
     },
     {
-      "name": "Turmas",
+      "name": "Dashboard",
       "item": [
         {
-          "name": "Listar Turmas",
+          "name": "Matrículas por Turma",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/turmas",
-              "host": ["{{base_url}}"],
-              "path": ["turmas"]
-            }
-          }
-        },
-        {
-          "name": "Buscar Turma por ID",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/turmas/1",
-              "host": ["{{base_url}}"],
-              "path": ["turmas", "1"]
-            }
-          }
-        },
-        {
-          "name": "Criar Turma",
-          "request": {
-            "method": "POST",
             "header": [
               {
-                "key": "Content-Type",
-                "value": "application/json"
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
               }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"nome\": \"Costura Básica - Manhã\",\n  \"descricao\": \"Turma de costura para iniciantes\",\n  \"horario\": \"Segunda a Sexta, 09:00-12:00\",\n  \"capacidade\": 15\n}"
+            "auth": {
+              "type": "noauth"
             },
+            "description": "Obter estatísticas de matrículas por turma",
             "url": {
-              "raw": "{{base_url}}/turmas",
-              "host": ["{{base_url}}"],
-              "path": ["turmas"]
+              "raw": "{{base_url}}/api/dashboard/matriculas-turma",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "dashboard",
+                "matriculas-turma"
+              ],
+              "query": [],
+              "variable": []
             }
           }
         },
         {
-          "name": "Atualizar Turma",
+          "name": "Relatório de Inadimplência",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Obter relatório detalhado de inadimplência",
+            "url": {
+              "raw": "{{base_url}}/api/dashboard/inadimplencia",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "dashboard",
+                "inadimplencia"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Resumo Dashboard",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Obter dados resumidos do dashboard",
+            "url": {
+              "raw": "{{base_url}}/api/dashboard/resumo",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "dashboard",
+                "resumo"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Autenticação",
+      "item": [
+        {
+          "name": "Atualizar Perfil",
           "request": {
             "method": "PUT",
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
               }
             ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Atualizar perfil do usuário autenticado",
+            "url": {
+              "raw": "{{base_url}}/api/auth/perfil",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "perfil"
+              ],
+              "query": [],
+              "variable": []
+            },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"nome\": \"Costura Básica - Manhã (Atualizado)\",\n  \"capacidade\": 20\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/turmas/1",
-              "host": ["{{base_url}}"],
-              "path": ["turmas", "1"]
+              "raw": "{\n  \"nome\": \"João Silva Atualizado\",\n  \"email\": \"joao.novo@example.com\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
         {
-          "name": "Deletar Turma",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/turmas/1",
-              "host": ["{{base_url}}"],
-              "path": ["turmas", "1"]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Matrículas",
-      "item": [
-        {
-          "name": "Listar Matrículas",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/matriculas",
-              "host": ["{{base_url}}"],
-              "path": ["matriculas"]
-            }
-          }
-        },
-        {
-          "name": "Listar Matrículas por Turma",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/matriculas/turma/1",
-              "host": ["{{base_url}}"],
-              "path": ["matriculas", "turma", "1"]
-            }
-          }
-        },
-        {
-          "name": "Matricular Aluno",
+          "name": "Login",
           "request": {
             "method": "POST",
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
               }
             ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Fazer login",
+            "url": {
+              "raw": "{{base_url}}/api/auth/login",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ],
+              "query": [],
+              "variable": []
+            },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"alunoId\": 1,\n  \"turmaId\": 1,\n  \"planoId\": 1,\n  \"dataInicio\": \"2025-12-03\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/matriculas",
-              "host": ["{{base_url}}"],
-              "path": ["matriculas"]
+              "raw": "{\n  \"email\": \"admin@admin.com\",\n  \"senha\": \"Admin1238@\"\n  }",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
         {
-          "name": "Desmatricular Aluno",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/matriculas/1",
-              "host": ["{{base_url}}"],
-              "path": ["matriculas", "1"]
-            }
-          }
-        }
-      ]
-    },
-    {
-      "name": "Planos",
-      "item": [
-        {
-          "name": "Listar Planos",
+          "name": "Ver Perfil",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/planos",
-              "host": ["{{base_url}}"],
-              "path": ["planos"]
-            }
-          }
-        },
-        {
-          "name": "Buscar Plano por ID",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/planos/1",
-              "host": ["{{base_url}}"],
-              "path": ["planos", "1"]
-            }
-          }
-        },
-        {
-          "name": "Criar Plano",
-          "request": {
-            "method": "POST",
             "header": [
               {
-                "key": "Content-Type",
-                "value": "application/json"
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
               }
             ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"nome\": \"Plano Mensal\",\n  \"descricao\": \"Acesso mensal às aulas\",\n  \"valor\": 150.00,\n  \"duracaoMeses\": 1\n}"
+            "auth": {
+              "type": "noauth"
             },
+            "description": "Ver perfil do usuário autenticado",
             "url": {
-              "raw": "{{base_url}}/planos",
-              "host": ["{{base_url}}"],
-              "path": ["planos"]
-            }
-          }
-        },
-        {
-          "name": "Atualizar Plano",
-          "request": {
-            "method": "PUT",
-            "header": [
-              {
-                "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"nome\": \"Plano Mensal Premium\",\n  \"valor\": 200.00\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/planos/1",
-              "host": ["{{base_url}}"],
-              "path": ["planos", "1"]
-            }
-          }
-        },
-        {
-          "name": "Deletar Plano",
-          "request": {
-            "method": "DELETE",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/planos/1",
-              "host": ["{{base_url}}"],
-              "path": ["planos", "1"]
+              "raw": "{{base_url}}/api/auth/perfil",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "auth",
+                "perfil"
+              ],
+              "query": [],
+              "variable": []
             }
           }
         }
@@ -461,26 +451,50 @@
       "name": "Pagamentos",
       "item": [
         {
-          "name": "Listar Pagamentos",
+          "name": "Atualizar Status de Pagamento",
           "request": {
-            "method": "GET",
-            "header": [],
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Atualizar status do pagamento",
             "url": {
-              "raw": "{{base_url}}/pagamentos",
-              "host": ["{{base_url}}"],
-              "path": ["pagamentos"]
-            }
-          }
-        },
-        {
-          "name": "Listar Pagamentos por Aluno",
-          "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/pagamentos/aluno/1",
-              "host": ["{{base_url}}"],
-              "path": ["pagamentos", "aluno", "1"]
+              "raw": "{{base_url}}/api/pagamentos/1/status",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pagamentos",
+                "1",
+                "status"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"status\": \"Pago\",\n  \"data_pagamento\": \"2025-11-30\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         },
@@ -488,11 +502,95 @@
           "name": "Listar Pagamentos Atrasados",
           "request": {
             "method": "GET",
-            "header": [],
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Listar todos os pagamentos atrasados",
             "url": {
-              "raw": "{{base_url}}/pagamentos/atrasados",
-              "host": ["{{base_url}}"],
-              "path": ["pagamentos", "atrasados"]
+              "raw": "{{base_url}}/api/pagamentos/atrasados",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pagamentos",
+                "atrasados"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Listar Pagamentos por Aluno",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Listar pagamentos de um aluno específico",
+            "url": {
+              "raw": "{{base_url}}/api/pagamentos/aluno/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pagamentos",
+                "aluno",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Listar Pagamentos",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Listar todos os pagamentos",
+            "url": {
+              "raw": "{{base_url}}/api/pagamentos",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pagamentos"
+              ],
+              "query": [],
+              "variable": []
             }
           }
         },
@@ -503,86 +601,591 @@
             "header": [
               {
                 "key": "Content-Type",
-                "value": "application/json"
-              }
-            ],
-            "body": {
-              "mode": "raw",
-              "raw": "{\n  \"matriculaId\": 1,\n  \"valor\": 150.00,\n  \"dataVencimento\": \"2025-12-10\",\n  \"status\": \"PENDENTE\",\n  \"observacoes\": \"Pagamento referente ao mês de dezembro\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/pagamentos",
-              "host": ["{{base_url}}"],
-              "path": ["pagamentos"]
-            }
-          }
-        },
-        {
-          "name": "Atualizar Status do Pagamento",
-          "request": {
-            "method": "PUT",
-            "header": [
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
               {
-                "key": "Content-Type",
-                "value": "application/json"
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
               }
             ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Registrar novo pagamento",
+            "url": {
+              "raw": "{{base_url}}/api/pagamentos",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "pagamentos"
+              ],
+              "query": [],
+              "variable": []
+            },
             "body": {
               "mode": "raw",
-              "raw": "{\n  \"status\": \"PAGO\",\n  \"dataPagamento\": \"2025-12-05\"\n}"
-            },
-            "url": {
-              "raw": "{{base_url}}/pagamentos/1/status",
-              "host": ["{{base_url}}"],
-              "path": ["pagamentos", "1", "status"]
+              "raw": "{\n  \"data_vencimento\": \"2025-12-30\",\n  \"valor\": 150.00,\n  \"mes_referencia\": \"Dezembro/2025\",\n  \"alunoId\": 1,\n  \"planoId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
             }
           }
         }
       ]
     },
     {
-      "name": "Dashboard",
+      "name": "Planos",
       "item": [
         {
-          "name": "Resumo Geral",
+          "name": "Atualizar Plano",
           "request": {
-            "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/dashboard/resumo",
-              "host": ["{{base_url}}"],
-              "path": ["dashboard", "resumo"]
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
             },
-            "description": "Retorna resumo com total de alunos, turmas, pagamentos, etc."
+            "description": "Atualizar informações do plano",
+            "url": {
+              "raw": "{{base_url}}/api/planos/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "planos",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Plano Mensal Premium\",\n  \"valor\": 200.00\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
           }
         },
         {
-          "name": "Inadimplência Detalhada",
+          "name": "Buscar Plano por ID",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/dashboard/inadimplencia",
-              "host": ["{{base_url}}"],
-              "path": ["dashboard", "inadimplencia"]
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
             },
-            "description": "Retorna detalhes sobre pagamentos atrasados e inadimplência"
+            "description": "Buscar plano específico por ID",
+            "url": {
+              "raw": "{{base_url}}/api/planos/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "planos",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
           }
         },
         {
-          "name": "Matrículas por Turma",
+          "name": "Criar Plano",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Criar novo plano de pagamento",
+            "url": {
+              "raw": "{{base_url}}/api/planos",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "planos"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Plano Mensal\",\n  \"valor\": 150.00\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Deletar Plano",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Deletar plano",
+            "url": {
+              "raw": "{{base_url}}/api/planos/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "planos",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Listar Planos",
           "request": {
             "method": "GET",
-            "header": [],
-            "url": {
-              "raw": "{{base_url}}/dashboard/matriculas-turma",
-              "host": ["{{base_url}}"],
-              "path": ["dashboard", "matriculas-turma"]
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
             },
-            "description": "Retorna quantidade de matrículas agrupadas por turma"
+            "description": "Listar todos os planos",
+            "url": {
+              "raw": "{{base_url}}/api/planos",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "planos"
+              ],
+              "query": [],
+              "variable": []
+            }
           }
         }
       ]
+    },
+    {
+      "name": "Matrículas",
+      "item": [
+        {
+          "name": "Desmatricular Aluno",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Desmatricular aluno (remover matrícula)",
+            "url": {
+              "raw": "{{base_url}}/api/matriculas/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "matriculas",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Listar Matrículas por Turma",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Listar matrículas de uma turma específica",
+            "url": {
+              "raw": "{{base_url}}/api/matriculas/turma/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "matriculas",
+                "turma",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Listar Matrículas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Listar todas as matrículas",
+            "url": {
+              "raw": "{{base_url}}/api/matriculas",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "matriculas"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Matricular Aluno",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Matricular aluno em uma turma",
+            "url": {
+              "raw": "{{base_url}}/api/matriculas",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "matriculas"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"alunoId\": 1,\n  \"turmaId\": 1\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Turmas",
+      "item": [
+        {
+          "name": "Atualizar Turma",
+          "request": {
+            "method": "PUT",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Atualizar informações da turma",
+            "url": {
+              "raw": "{{base_url}}/api/turmas/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "turmas",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Turma A - Iniciante - Atualizado\",\n  \"vagas_totais\": 25\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Buscar Turma por ID",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Buscar turma específica por ID",
+            "url": {
+              "raw": "{{base_url}}/api/turmas/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "turmas",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Criar Turma",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json",
+                "disabled": false,
+                "type": "default"
+              },
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Criar nova turma",
+            "url": {
+              "raw": "{{base_url}}/api/turmas",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "turmas"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"nome\": \"Turma A - Iniciante\",\n  \"dias_semana\": \"Segunda, Quarta\",\n  \"horario\": \"19:00-20:30\",\n  \"vagas_totais\": 20\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          }
+        },
+        {
+          "name": "Deletar Turma",
+          "request": {
+            "method": "DELETE",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Deletar turma",
+            "url": {
+              "raw": "{{base_url}}/api/turmas/1",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "turmas",
+                "1"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        },
+        {
+          "name": "Listar Turmas",
+          "request": {
+            "method": "GET",
+            "header": [
+              {
+                "key": "Authorization",
+                "value": "Bearer {{token}}",
+                "disabled": false,
+                "type": "default"
+              }
+            ],
+            "auth": {
+              "type": "noauth"
+            },
+            "description": "Listar todas as turmas",
+            "url": {
+              "raw": "{{base_url}}/api/turmas",
+              "protocol": "",
+              "host": [
+                "{{base_url}}"
+              ],
+              "path": [
+                "api",
+                "turmas"
+              ],
+              "query": [],
+              "variable": []
+            }
+          }
+        }
+      ]
+    }
+  ],
+  "variable": [
+    {
+      "key": "base_url",
+      "value": "",
+      "type": "default"
+    },
+    {
+      "key": "token",
+      "value": "",
+      "type": "default"
     }
   ]
 }
